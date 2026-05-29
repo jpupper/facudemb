@@ -7,7 +7,7 @@ html {
 :root {
     --primary-color: #0a0a0a;
     --accent-color: #d4af37;
-    --text-color: #e0e0e0;
+    --text-color: #c8c8c8;
     --dark-bg: #121212;
     --card-bg: #1a1a1a;
     --gradient-dark: linear-gradient(45deg, #0a0a0a, #1a1a1a);
@@ -156,7 +156,7 @@ h3 {
 
 .service-card {
     background: var(--card-bg);
-    padding: 2rem;
+    padding: 2rem 2rem 1.2rem;
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -167,7 +167,7 @@ h3 {
 }
 
 .service-card p {
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 }
 
 .video-gallery {
@@ -339,7 +339,7 @@ h3 {
 
 .btn-container {
     text-align: center;
-    margin: 0.8rem 0;
+    margin: 0;
 }
 
 .contact-label {
@@ -595,42 +595,36 @@ header {
     color: rgba(212, 175, 55, 0.9) !important;
 }
 
-/* Synth 3D nav link */
-.synth-nav-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--accent-color);
+/* Synth 3D nav link - inside nav-links */
+.nav-links .synth-nav-link {
+    display: inline;
+    gap: 0;
+    color: rgba(255, 255, 255, 0.75);
     text-decoration: none;
-    margin-left: 20px;
-    padding: 6px 14px;
-    border: 1px solid rgba(212, 175, 55, 0.25);
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-    text-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
-    animation: synth-pulse 3s ease-in-out infinite;
-}
-.synth-nav-link:hover {
-    background: rgba(212, 175, 55, 0.1);
-    border-color: var(--accent-color);
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
-    transform: translateY(-1px);
-}
-@keyframes synth-pulse {
-    0%, 100% { box-shadow: 0 0 0 rgba(212, 175, 55, 0); }
-    50% { box-shadow: 0 0 12px rgba(212, 175, 55, 0.1); }
+    font-weight: 400;
+    font-size: 0.88rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    text-shadow: none;
+    animation: none;
 }
 
-@media screen and (max-width: 768px) {
-    .synth-nav-link {
-        margin: 1rem auto 0;
-        display: flex;
-        justify-content: center;
-        width: fit-content;
-    }
+.nav-links .synth-nav-link:hover {
+    color: rgba(212, 175, 55, 0.85);
+    background: none;
+    border-color: none;
+    box-shadow: none;
+    transform: none;
+}
+
+.nav-links .synth-nav-link i {
+    margin-right: 4px;
+    font-size: 0.8rem;
 }
 /* Menu Open State */
 .menu-open .hamburger {
@@ -1254,13 +1248,6 @@ header {
         font-size: 0.9rem;
     }
 
-    .synth-nav-link {
-        font-size: 0.8rem;
-    }
-
-    .synth-nav-link i {
-        font-size: 0.9rem;
-    }
 
     /* Piano modal mobile */
     .piano-modal-content {
