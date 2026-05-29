@@ -351,6 +351,7 @@
 
     document.addEventListener('touchstart', function(e) {
         if (!modal.classList.contains('active')) return;
+        let hitKey = false;
         for (let i = 0; i < e.changedTouches.length; i++) {
             const touch = e.changedTouches[i];
             const key = getKeyFromTouch(touch);
@@ -358,8 +359,11 @@
                 activeTouches[touch.identifier] = key.dataset.note;
                 key.classList.add('pressed');
                 playNote(key.dataset.note);
+                hitKey = true;
             }
         }
+        // Prevent synthetic mouse events from touch
+        if (hitKey) e.preventDefault();
     }, { passive: false });
 
     document.addEventListener('touchmove', function(e) {

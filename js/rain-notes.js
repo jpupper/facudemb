@@ -78,7 +78,7 @@
         reset() {
             this.x = Math.random() * W;
             this.y = -30 - Math.random() * 100;
-            this.size = 14 + Math.random() * 18;
+            this.size = 10 + Math.random() * 12;
             this.speed = 0.8 + Math.random() * 1.5;
             this.symbol = MUSIC_SYMBOLS[Math.floor(Math.random() * MUSIC_SYMBOLS.length)];
             this.opacity = 0.2 + Math.random() * 0.35;
@@ -125,11 +125,14 @@
         }
     }
 
-    // Sparkle particles - only emitted while mouse is held
+    // Sparkle particles - time-throttled (1 every 200ms)
+    let lastSparkleTime = 0;
     function updateSparkles() {
-        // Emit burst while mouse is pressed
+        // Emit burst while mouse is pressed, throttled
         if (mouseDown && mouseX > 0 && mouseY > 0) {
-            for (let i = 0; i < 4; i++) {
+            const now = Date.now();
+            if (now - lastSparkleTime >= 200) {
+                lastSparkleTime = now;
                 const angle = Math.random() * Math.PI * 2;
                 const dist = 5 + Math.random() * 25;
                 sparkles.push({

@@ -857,37 +857,33 @@ header {
 /* ========== Piano FAB (Floating Action Button) ========== */
 #piano-fab {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: var(--accent-color);
-    color: #0a0a0a;
-    border: 2px solid var(--accent-color);
+    bottom: 32px;
+    right: 32px;
+    width: 52px;
+    height: 52px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
     cursor: pointer;
     z-index: 999;
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
     transition: all 0.3s ease;
-    animation: piano-fab-blink 1s ease-in-out infinite;
+    animation: piano-fab-blink 1.2s ease-in-out infinite;
+    border-radius: 50%;
+    border: 1.5px solid rgba(212, 175, 55, 0.4);
+    background: transparent;
 }
 
 #piano-fab:hover {
-    background: #ffffff;
-    color: #0a0a0a;
-    border-color: #ffffff;
     transform: scale(1.15);
-    box-shadow: 0 0 50px rgba(212, 175, 55, 0.6);
+    border-color: var(--accent-color);
+    border-width: 2px;
+    background: rgba(212, 175, 55, 0.06);
     animation: none;
 }
 
 @keyframes piano-fab-blink {
-    0%, 100% { opacity: 1; box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); }
-    50% { opacity: 0.85; box-shadow: 0 0 15px rgba(212, 175, 55, 0.15); }
+    0%, 100% { opacity: 0.7; filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.2)); border-color: rgba(212, 175, 55, 0.3); }
+    50% { opacity: 1; filter: drop-shadow(0 0 18px rgba(212, 175, 55, 0.5)); border-color: rgba(212, 175, 55, 0.7); }
 }
 
 /* ========== Piano Modal ========== */
@@ -1068,46 +1064,203 @@ header {
     transform: translateY(2px);
 }
 
-/* Responsive Piano Modal */
+/* ========== Mobile Responsive ========== */
 @media (max-width: 768px) {
+    body {
+        font-size: 15px;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+        letter-spacing: 8px;
+    }
+
+    .hero p {
+        font-size: 0.75rem;
+        letter-spacing: 4px;
+    }
+
+    .hero-bio {
+        max-width: 100%;
+        margin: 1rem auto 0;
+        padding: 0;
+    }
+
+    .hero-bio p {
+        font-size: 0.72rem;
+        line-height: 1.7;
+        letter-spacing: 0.8px;
+    }
+
+    .hero-content {
+        padding: 1.5rem;
+        max-width: 90%;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        letter-spacing: 4px;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+
+    section {
+        padding: 2rem 0;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    .service-card {
+        padding: 1.5rem;
+    }
+
+    .image-gallery {
+        gap: 0.8rem;
+        margin-top: 1rem;
+    }
+
+    .gallery-image {
+        height: 200px;
+    }
+
+    .video-gallery {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .contact-row {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .contact-icon-link {
+        font-size: 1.8rem;
+    }
+
+    .contact-label {
+        font-size: 0.85rem;
+        letter-spacing: 3px;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 0.3rem;
+    }
+
     #piano-fab {
-        width: 50px;
-        height: 50px;
-        font-size: 1.4rem;
+        width: 44px;
+        height: 44px;
         bottom: 20px;
         right: 20px;
     }
 
-    .piano-modal-content {
-        padding: 1.5rem;
-        width: 95%;
+    #piano-fab svg {
+        width: 26px;
+        height: 15px;
     }
 
-    .piano-keyboard {
-        height: 150px;
+    /* Nav mobile */
+    .nav-links a {
+        font-size: 0.9rem;
     }
 
-    .black-key {
-        width: 24px;
-    }
-}
-
-@media (max-width: 480px) {
-    .preset-btn {
-        padding: 6px 14px;
+    .synth-nav-link {
         font-size: 0.8rem;
     }
 
+    .synth-nav-link i {
+        font-size: 0.9rem;
+    }
+
+    /* Piano modal mobile */
+    .piano-modal-content {
+        padding: 1rem;
+        max-width: 95%;
+    }
+
     .piano-keyboard {
-        height: 130px;
+        height: 120px;
+    }
+
+    .white-key {
+        font-size: 0.55rem;
+        padding-bottom: 8px;
     }
 
     .black-key {
         width: 20px;
+        height: 55%;
+    }
+
+    .preset-btn {
+        padding: 5px 12px;
+        font-size: 0.75rem;
+    }
+
+    .language-selector {
+        top: 12px;
+        left: 12px;
+        padding: 4px;
+        gap: 5px;
+    }
+
+    .lang-btn {
+        padding: 4px 8px;
+        font-size: 0.7rem;
     }
 }
 
-/* Touch-only extra feedback */
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2rem;
+        letter-spacing: 6px;
+    }
+
+    .hero p {
+        font-size: 0.65rem;
+        letter-spacing: 3px;
+    }
+
+    .hero-bio p {
+        font-size: 0.65rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .gallery-image {
+        height: 170px;
+    }
+
+    #piano-fab {
+        width: 38px;
+        height: 38px;
+        bottom: 15px;
+        right: 15px;
+    }
+
+    #piano-fab svg {
+        width: 22px;
+        height: 13px;
+    }
+
+    .piano-keyboard {
+        height: 100px;
+    }
+
+    .black-key {
+        width: 16px;
+    }
+
+    .contact-icon-link {
+        font-size: 1.5rem;
+    }
+}
+
+/* Touch-only extra feedback for piano keys */
 @media (hover: none) and (pointer: coarse) {
     .white-key:active,
     .white-key.pressed {
@@ -1121,9 +1274,5 @@ header {
         background: linear-gradient(180deg, #666 0%, #333 100%) !important;
         box-shadow: inset 0 2px 5px rgba(0,0,0,0.4), 0 6px 18px rgba(212, 175, 55, 0.35) !important;
         transform: translateY(3px) !important;
-    }
-
-    .piano-keyboard {
-        height: 170px;
     }
 }
