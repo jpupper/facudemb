@@ -23,8 +23,7 @@ body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     color: var(--text-color);
-    background: var(--dark-bg);
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0c16.569 0 30 13.431 30 30S46.569 60 30 60 0 46.569 0 30 13.431 0 30 0zm0 15c-8.284 0-15 6.716-15 15s6.716 15 15 15 15-6.716 15-15-6.716-15-15-15z' fill='%23222222' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+    background: #000000;
     font-size: 18px;
     overflow-x: hidden;
     width: 100%;
@@ -65,16 +64,34 @@ body {
 }
 
 .hero h1 {
-    font-size: 6rem;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    font-size: 5rem;
+    margin-bottom: 0.8rem;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
     color: var(--accent-color);
-    font-weight: 800;
-    letter-spacing: 2px;
+    font-weight: 200;
+    letter-spacing: 8px;
+    text-transform: uppercase;
 }
 
 .hero p {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    letter-spacing: 4px;
+    font-weight: 300;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+.hero-bio {
+    max-width: 600px;
+    margin: 2rem auto 0;
+    padding: 0 1rem;
+}
+
+.hero-bio p {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    opacity: 0.55;
+    font-weight: 300;
     letter-spacing: 1px;
 }
 
@@ -90,7 +107,7 @@ section {
 }
 
 section:nth-child(even) {
-    background: var(--gradient-dark);
+    background: transparent;
 }
 
 h2 {
@@ -202,10 +219,10 @@ h3 {
     text-align: center;
     margin-top: 3rem;
     padding: 4rem 2rem;
-    background: var(--card-bg);
+    background: transparent;
     border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    border: 1px solid var(--accent-color);
+    box-shadow: none;
+    border: 1px solid rgba(212, 175, 55, 0.08);
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
@@ -233,16 +250,15 @@ h3 {
     transition: all 0.3s ease;
     padding: 1.5rem;
     border-radius: 50%;
-    background: var(--dark-bg);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    background: transparent;
     margin: 0 1rem;
 }
 
 .social-links a:hover {
     color: #ffffff;
-    background: var(--accent-color);
+    background: rgba(212, 175, 55, 0.15);
     transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
 }
 
 .image-gallery {
@@ -371,30 +387,46 @@ h3 {
 }
 
 .whatsapp-link {
-    color: white;
+    color: var(--accent-color);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 20px;
-    background-color: #25D366;
+    gap: 10px;
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid rgba(212, 175, 55, 0.25);
     border-radius: 50px;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
     flex-wrap: nowrap;
     width: auto;
     justify-content: center;
+    font-weight: 500;
+    font-size: 1rem;
 }
 
 .whatsapp-link:hover {
-    background-color: #22c35e;
+    border-color: var(--accent-color);
+    color: white;
+    background: rgba(212, 175, 55, 0.1);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
 }
 
 .whatsapp-link i {
+    color: var(--accent-color);
+    font-size: 1.3em;
+}
+
+.whatsapp-link:hover i {
     color: white;
-    font-size: 1.4em;
+}
+
+.whatsapp-link span {
+    color: var(--accent-color);
+}
+
+.whatsapp-link:hover span {
+    color: white;
 }
 
 .phone-number {
@@ -497,6 +529,43 @@ header {
     color: var(--dark-bg) !important;
 }
 
+/* Synth 3D nav link */
+.synth-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent-color);
+    text-decoration: none;
+    margin-left: 20px;
+    padding: 6px 14px;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+    animation: synth-pulse 3s ease-in-out infinite;
+}
+.synth-nav-link:hover {
+    background: rgba(212, 175, 55, 0.1);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    transform: translateY(-1px);
+}
+@keyframes synth-pulse {
+    0%, 100% { box-shadow: 0 0 0 rgba(212, 175, 55, 0); }
+    50% { box-shadow: 0 0 12px rgba(212, 175, 55, 0.1); }
+}
+
+@media screen and (max-width: 768px) {
+    .synth-nav-link {
+        margin: 1rem auto 0;
+        display: flex;
+        justify-content: center;
+        width: fit-content;
+    }
+}
 /* Menu Open State */
 .menu-open .hamburger {
     background-color: transparent;
@@ -832,33 +901,44 @@ header {
     filter: brightness(2.6);
 }
 
-/* ========== Instagram Button ========== */
+/* ========== Instagram Button (subtle, elegant) ========== */
 .instagram-btn {
-    color: white;
+    color: var(--accent-color);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 24px;
-    background: radial-gradient(circle at 30% 30%, #fdf497, #fd5949, #d6249f, #285AEB);
+    gap: 10px;
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid rgba(212, 175, 55, 0.25);
     border-radius: 50px;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(225, 48, 108, 0.3);
-    font-weight: 600;
-    font-size: 1.1rem;
+    font-weight: 500;
+    font-size: 1rem;
 }
 
 .instagram-btn:hover {
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 4px 15px rgba(225, 48, 108, 0.5);
+    border-color: var(--accent-color);
+    color: white;
+    background: rgba(212, 175, 55, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
 }
 
 .instagram-btn i {
-    font-size: 1.5em;
+    font-size: 1.3em;
+    color: var(--accent-color);
+}
+
+.instagram-btn:hover i {
     color: white;
 }
 
 .instagram-btn span {
+    color: var(--accent-color);
+}
+
+.instagram-btn:hover span {
     color: white;
 }
 
@@ -878,57 +958,34 @@ header {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    width: 60px;
-    height: 60px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
-    background: var(--accent-color);
-    color: var(--primary-color);
+    background: transparent;
+    color: var(--accent-color);
+    border: 1px solid rgba(212, 175, 55, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     cursor: pointer;
     z-index: 999;
-    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.5);
-    animation: piano-blink 1.5s ease-in-out infinite;
     transition: all 0.3s ease;
-    border: none;
+    animation: piano-pulse 2.5s ease-in-out infinite;
 }
 
 #piano-fab:hover {
-    transform: scale(1.15);
-    box-shadow: 0 6px 30px rgba(212, 175, 55, 0.7);
+    background: rgba(212, 175, 55, 0.1);
+    border-color: var(--accent-color);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
     animation: none;
 }
 
-#piano-fab i {
-    position: absolute;
-    transition: opacity 0.5s ease;
-}
-
-#piano-fab .fa-music {
-    animation: icon-swap-1 1.5s ease-in-out infinite;
-}
-
-#piano-fab .fa-piano-keyboard {
-    animation: icon-swap-2 1.5s ease-in-out infinite;
-}
-
-@keyframes piano-blink {
-    0%, 100% { opacity: 1; box-shadow: 0 4px 20px rgba(212, 175, 55, 0.5); }
-    50% { opacity: 0.85; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.2); }
-}
-
-@keyframes icon-swap-1 {
-    0%, 40% { opacity: 1; }
-    50%, 90% { opacity: 0; transform: scale(0.8); }
-    100% { opacity: 1; }
-}
-
-@keyframes icon-swap-2 {
-    0%, 40% { opacity: 0; transform: scale(0.8); }
-    50%, 90% { opacity: 1; }
-    100% { opacity: 0; }
+@keyframes piano-pulse {
+    0%, 100% { opacity: 0.7; box-shadow: 0 0 0 rgba(212, 175, 55, 0); }
+    50% { opacity: 1; box-shadow: 0 0 20px rgba(212, 175, 55, 0.15); }
 }
 
 /* ========== Piano Modal ========== */
@@ -1034,7 +1091,7 @@ header {
 }
 
 .white-key {
-    width: 14.28%;
+    width: 12.5%;
     height: 100%;
     background: linear-gradient(180deg, #f0f0f0 0%, #e0e0e0 100%);
     border: 1px solid #ccc;

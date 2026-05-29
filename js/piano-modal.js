@@ -31,6 +31,7 @@
         'A4': 440.00,
         'A#4': 466.16,
         'B4': 493.88,
+        'C5': 523.25,
     };
 
     function getAudioContext() {
@@ -366,6 +367,7 @@
             'p': 'A4',
             '[': 'A#4',
             ']': 'B4',
+            '\\': 'C5',
         };
 
         // Close modal with Escape
@@ -393,6 +395,6 @@
         }
     });
 
-    console.log('🎹 Piano Virtual listo. Teclas: QWERTYUIOP[] = C4-B4');
-    console.log('   Q=Do  W=Do#  E=Re  R=Re#  T=Mi  Y=Fa  U=Fa#  I=Sol  O=Sol#  P=La  [=La#  ]=Si');
+    console.log('🎹 Piano Virtual listo. Una octava completa: QWERTYUIOP[]\\ = C4-C5');
+    console.log('   Q=Do  W=Do#  E=Re  R=Re#  T=Mi  Y=Fa  U=Fa#  I=Sol  O=Sol#  P=La  [=La#  ]=Si  \\=Do5');
 })();
