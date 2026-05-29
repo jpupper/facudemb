@@ -8,11 +8,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: 'Inter', sans-serif; color: #fff; user-select: none; }
-
-        /* Three.js canvas container */
         #three-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
-
-        /* Top HUD */
         #hud {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 10;
             padding: 16px 24px;
@@ -21,10 +17,7 @@
             pointer-events: none;
         }
         #hud > * { pointer-events: auto; }
-        .hud-title {
-            font-size: 11px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase;
-            color: rgba(255,255,255,0.4); text-shadow: 0 0 30px rgba(100,150,255,0.2);
-        }
+        .hud-title { font-size: 11px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.4); text-shadow: 0 0 30px rgba(100,150,255,0.2); }
         .hud-title strong { color: rgba(255,255,255,0.7); font-weight: 600; letter-spacing: 0; }
         .hud-controls { display: flex; gap: 10px; align-items: center; }
         .hud-btn {
@@ -35,8 +28,6 @@
         }
         .hud-btn:hover { background: rgba(255,255,255,0.12); color: #fff; border-color: rgba(255,255,255,0.3); }
         .hud-btn.active { background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(100,180,255,0.5); box-shadow: 0 0 20px rgba(100,180,255,0.1); }
-
-        /* Preset selector */
         #preset-selector {
             position: fixed; top: 60px; left: 50%; transform: translateX(-50%);
             z-index: 10; display: flex; gap: 4px;
@@ -51,28 +42,21 @@
         }
         .preset-btn:hover { color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.05); }
         .preset-btn.active { color: #fff; background: rgba(255,255,255,0.1); box-shadow: 0 0 20px rgba(100,150,255,0.1); }
-
-        /* Bottom keyboard panel */
         #keyboard-panel {
             position: fixed; bottom: 0; left: 0; width: 100%; z-index: 10;
             background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);
             padding: 30px 20px 20px;
             display: flex; flex-direction: column; align-items: center;
         }
-        #keyboard-label {
-            font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
-            color: rgba(255,255,255,0.15); margin-bottom: 12px;
-            font-weight: 300;
+        #keyboard-label { font-size: 9px; letter-spacing: 2px; color: rgba(255,255,255,0.15); margin-bottom: 8px; font-weight: 300; text-align: center; }
+        #octave-badge {
+            font-size: 10px; letter-spacing: 2px; color: rgba(255,255,255,0.3); margin-bottom: 6px;
+            display: flex; gap: 10px; align-items: center;
         }
-        #keyboard {
-            display: flex; position: relative; height: 130px;
-            justify-content: center;
-        }
-        .octave-group { display: flex; position: relative; }
-        .octave-sep {
-            width: 2px; background: rgba(255,255,255,0.05); margin: 0 4px;
-            align-self: stretch;
-        }
+        #octave-badge span { padding: 2px 8px; border-radius: 10px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); }
+        .oct-btn { background: none; border: none; color: rgba(255,255,255,0.3); cursor: pointer; font-size: 14px; font-family: 'Inter'; padding: 0 4px; transition: 0.2s; }
+        .oct-btn:hover { color: #fff; }
+        #keyboard { display: flex; position: relative; height: 130px; justify-content: center; }
         .wk {
             width: 36px; height: 130px;
             background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%);
@@ -81,128 +65,66 @@
             cursor: pointer; transition: all 0.05s ease;
             display: flex; flex-direction: column; align-items: center;
             justify-content: flex-end; padding-bottom: 10px;
-            position: relative;
-            margin: 0 1px;
+            position: relative; margin: 0 1px;
         }
-        .wk .key-label {
-            font-size: 9px; color: rgba(255,255,255,0.2); font-weight: 600;
-            font-family: 'JetBrains Mono', monospace;
-            pointer-events: none;
-        }
-        .wk .note-label {
-            font-size: 8px; color: rgba(255,255,255,0.08); margin-bottom: 4px;
-            pointer-events: none;
-        }
-        .wk.pressed {
-            background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(100,180,255,0.2) 100%) !important;
-            border-color: rgba(100,180,255,0.4) !important;
-            transform: scaleY(0.97);
-        }
+        .wk .key-label { font-size: 10px; color: rgba(255,255,255,0.35); font-weight: 700; font-family: 'JetBrains Mono', monospace; pointer-events: none; letter-spacing: 0; }
+        .wk .note-label { font-size: 7px; color: rgba(255,255,255,0.1); margin-bottom: 2px; pointer-events: none; letter-spacing: 0; }
+        .wk.pressed { background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(100,180,255,0.2) 100%) !important; border-color: rgba(100,180,255,0.4) !important; transform: scaleY(0.97); }
         .bk {
             width: 22px; height: 80px;
             background: linear-gradient(180deg, rgba(20,20,30,0.95) 0%, rgba(10,10,15,0.95) 100%);
             border: 1px solid rgba(255,255,255,0.12);
             border-radius: 0 0 4px 4px;
             cursor: pointer; transition: all 0.05s ease;
-            position: absolute;
-            top: 0;
-            z-index: 2;
+            position: absolute; top: 0; z-index: 2;
             display: flex; flex-direction: column; align-items: center;
-            justify-content: flex-end; padding-bottom: 8px;
+            justify-content: flex-end; padding-bottom: 6px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.5);
         }
-        .bk .key-label {
-            font-size: 7px; color: rgba(255,255,255,0.25); font-weight: 600;
-            font-family: 'JetBrains Mono', monospace;
-            pointer-events: none;
-        }
-        .bk.pressed {
-            background: linear-gradient(180deg, rgba(60,60,80,0.95) 0%, rgba(40,40,60,0.95) 100%) !important;
-            border-color: rgba(100,180,255,0.5) !important;
-            transform: scaleY(0.95);
-        }
-
-        /*** NOTE GLOW on each key ***/
-        .wk .key-glow, .bk .key-glow {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            border-radius: inherit;
-            opacity: 0;
-            transition: opacity 0.1s ease;
-            pointer-events: none;
-        }
+        .bk .key-label { font-size: 8px; color: rgba(255,255,255,0.3); font-weight: 700; font-family: 'JetBrains Mono', monospace; pointer-events: none; }
+        .bk.pressed { background: linear-gradient(180deg, rgba(60,60,80,0.95) 0%, rgba(40,40,60,0.95) 100%) !important; border-color: rgba(100,180,255,0.5) !important; transform: scaleY(0.95); }
+        .wk .key-glow, .bk .key-glow { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: inherit; opacity: 0; transition: opacity 0.08s ease; pointer-events: none; }
         .wk.pressed .key-glow, .bk.pressed .key-glow { opacity: 1; }
-
-        /* Bottom info bar */
         #info-bar {
-            position: fixed; bottom: 175px; left: 50%; transform: translateX(-50%);
-            z-index: 5;
-            display: flex; gap: 20px; align-items: center;
-            font-size: 10px; letter-spacing: 1px; color: rgba(255,255,255,0.15);
-            font-weight: 300;
+            position: fixed; bottom: 185px; left: 50%; transform: translateX(-50%);
+            z-index: 5; display: flex; gap: 16px; align-items: center;
+            font-size: 10px; letter-spacing: 1px; color: rgba(255,255,255,0.12); font-weight: 300;
         }
         #info-bar span { display: flex; align-items: center; gap: 6px; }
-        #bpm-display { color: rgba(255,255,255,0.3); }
-        .dot {
-            display: inline-block; width: 4px; height: 4px; border-radius: 50%;
-            background: rgba(255,255,255,0.1); transition: all 0.15s ease;
-        }
+        .dot { display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.1); transition: all 0.15s ease; }
         .dot.active { background: rgba(100,180,255,0.6); box-shadow: 0 0 8px rgba(100,180,255,0.3); }
-
-        /* Volume slider */
         .vol-container { display: flex; align-items: center; gap: 8px; }
         .vol-container label { font-size: 9px; color: rgba(255,255,255,0.2); letter-spacing: 1px; }
-        #volume-slider {
-            -webkit-appearance: none; appearance: none;
-            width: 60px; height: 3px; border-radius: 2px;
-            background: rgba(255,255,255,0.1);
-            outline: none; cursor: pointer;
-        }
-        #volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none; appearance: none;
-            width: 10px; height: 10px; border-radius: 50%;
-            background: rgba(255,255,255,0.3); cursor: pointer;
-            transition: all 0.2s;
-        }
+        #volume-slider { -webkit-appearance: none; appearance: none; width: 60px; height: 3px; border-radius: 2px; background: rgba(255,255,255,0.1); outline: none; cursor: pointer; }
+        #volume-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; }
         #volume-slider::-webkit-slider-thumb:hover { background: rgba(255,255,255,0.5); transform: scale(1.2); }
-
-        /* Back button */
         #back-link {
             position: fixed; top: 16px; right: 24px; z-index: 20;
             color: rgba(255,255,255,0.3); text-decoration: none;
             font-size: 11px; letter-spacing: 1px; font-weight: 300;
-            transition: all 0.3s;
-            padding: 6px 14px; border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s; padding: 6px 14px; border: 1px solid rgba(255,255,255,0.06);
             border-radius: 20px;
         }
         #back-link:hover { color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.15); }
-
-        /* Loading */
         #loading {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 999; display: flex; flex-direction: column;
             align-items: center; justify-content: center;
-            background: #000;
-            transition: opacity 1s ease;
+            background: #000; transition: opacity 1s ease;
         }
         #loading.hidden { opacity: 0; pointer-events: none; }
-        #loading .spinner {
-            width: 30px; height: 30px; border: 2px solid rgba(255,255,255,0.06);
-            border-top-color: rgba(255,255,255,0.3);
-            border-radius: 50%; animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
+        #loading .spinner { width: 30px; height: 30px; border: 2px solid rgba(255,255,255,0.06); border-top-color: rgba(255,255,255,0.3); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
         @keyframes spin { to { transform: rotate(360deg); } }
         #loading p { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.15); font-weight: 300; }
-
         @media (max-width: 768px) {
             .wk { width: 28px; height: 100px; }
             .bk { width: 17px; height: 60px; }
             #keyboard { height: 100px; }
-            #keyboard-panel { padding: 20px 10px 12px; }
-            #info-bar { bottom: 140px; font-size: 8px; gap: 12px; }
+            #keyboard-panel { padding: 16px 6px 10px; }
+            #info-bar { bottom: 148px; font-size: 8px; gap: 10px; }
             .hud-title { font-size: 9px; }
-            #preset-selector { top: 55px; }
-            .preset-btn { padding: 4px 10px; font-size: 9px; }
+            #preset-selector { top: 52px; }
+            .preset-btn { padding: 4px 8px; font-size: 9px; }
             #back-link { font-size: 9px; padding: 4px 10px; }
             #volume-slider { width: 40px; }
             .hud-btn { padding: 4px 10px; font-size: 9px; }
@@ -210,21 +132,13 @@
     </style>
 </head>
 <body>
-
-<div id="loading">
-    <div class="spinner"></div>
-    <p>Cargando Nebulosa Sonora</p>
-</div>
-
+<div id="loading"><div class="spinner"></div><p>Cargando Nebulosa Sonora</p></div>
 <div id="three-container"></div>
 
 <div id="hud">
     <div class="hud-title"><strong>✦</strong> &nbsp;NEBULOSA SONORA &nbsp;<span style="opacity:0.3;">·</span>&nbsp; <span style="font-weight:300;">Sintetizador Sinestésico</span></div>
     <div class="hud-controls">
-        <div class="vol-container">
-            <label>VOL</label>
-            <input type="range" id="volume-slider" min="0" max="100" value="70">
-        </div>
+        <div class="vol-container"><label>VOL</label><input type="range" id="volume-slider" min="0" max="100" value="70"></div>
         <button class="hud-btn" id="btn-vision">Visuales</button>
         <button class="hud-btn" id="btn-fullscreen">Pantalla completa</button>
     </div>
@@ -240,11 +154,16 @@
 
 <div id="info-bar">
     <span id="bpm-display">♩ 60 BPM</span>
-    <span><span id="note-indicator" class="dot"></span> NOTAS ACTIVAS: <span id="active-count">0</span></span>
+    <span><span id="note-indicator" class="dot"></span> NOTAS: <span id="active-count">0</span></span>
 </div>
 
 <div id="keyboard-panel">
-    <div id="keyboard-label">▼ Toca con el mouse o el teclado (Z-M / Q-]) ▼</div>
+    <div id="octave-badge">
+        <button class="oct-btn" id="oct-down">◂</button>
+        <span>OCTAVA <span id="oct-display">3</span></span>
+        <button class="oct-btn" id="oct-up">▸</button>
+    </div>
+    <div id="keyboard-label">Blancas: A S D F G H J &nbsp;·&nbsp; Negras: W E T Y U</div>
     <div id="keyboard"></div>
 </div>
 
@@ -266,913 +185,688 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
-// ─── NOTES & FREQUENCIES ────────────────────────────────────────
+// ─── ROUND PARTICLE TEXTURE ─────────────────────────────────────
+function makeCircleTex() {
+    const c = document.createElement('canvas');
+    c.width = c.height = 64;
+    const ctx = c.getContext('2d');
+    const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+    g.addColorStop(0, 'rgba(255,255,255,1)');
+    g.addColorStop(0.1, 'rgba(255,255,255,0.9)');
+    g.addColorStop(0.35, 'rgba(255,255,255,0.4)');
+    g.addColorStop(0.7, 'rgba(255,255,255,0.08)');
+    g.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, 64, 64);
+    return new THREE.CanvasTexture(c);
+}
+const ROUND_TEX = makeCircleTex();
+
+// ─── NOTES ──────────────────────────────────────────────────────
 const NOTE_NAMES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const WHITE_BASES = ['C','D','E','F','G','A','B'];
+const BLACK_BASES = ['C#','D#','F#','G#','A#'];
 function freqFromNote(note) {
-    const n = NOTE_NAMES.indexOf(note.replace(/[0-9]/g,''));
-    const oct = parseInt(note.replace(/[A-Z#]+/g,''));
-    if (n === -1) return 440;
-    const semi = (oct - 4) * 12 + n;
-    return 440 * Math.pow(2, semi / 12);
+    const n = NOTE_NAMES.indexOf(note.replace(/[0-9]/g,'')); if (n === -1) return 440;
+    const oct = parseInt(note.replace(/[A-Z#]+/g,'')); return 440 * Math.pow(2, ((oct-4)*12 + n) / 12);
 }
-
-// Notes layout: 2 octaves C3 to B4 (24 keys)
-const whiteKeys = ['C','D','E','F','G','A','B'];
-const blackKeys = ['C#','D#','F#','G#','A#'];
-function octaveNotes(oct) {
-    return whiteKeys.map(w => w+oct).concat(blackKeys.map(b => b+oct));
-}
-
 const ALL_NOTES = [];
-for (let oct = 3; oct <= 4; oct++) {
-    whiteKeys.forEach(w => ALL_NOTES.push(w+oct));
+for (let oct = 3; oct <= 4; oct++) WHITE_BASES.forEach(w => ALL_NOTES.push(w+oct));
+
+// Color palette: refined pastel-neon synesthesia
+const NOTE_COLORS = {
+    'C': new THREE.Color(0.95, 0.25, 0.25),
+    'D': new THREE.Color(1.00, 0.55, 0.10),
+    'E': new THREE.Color(0.85, 0.85, 0.15),
+    'F': new THREE.Color(0.20, 0.85, 0.35),
+    'G': new THREE.Color(0.15, 0.75, 0.90),
+    'A': new THREE.Color(0.50, 0.35, 1.00),
+    'B': new THREE.Color(0.90, 0.25, 0.80),
+};
+
+// ─── KEYBOARD MAPPING ──────────────────────────────────────────
+const WHITE_KEYS_ROW = ['a','s','d','f','g','h','j'];
+const BLACK_KEYS_ROW = ['w','e','t','y','u'];
+let CURRENT_OCTAVE = 3;
+let KEYBOARD_MAP = {};
+function buildKeyMap(oct) {
+    const m = {};
+    WHITE_KEYS_ROW.forEach((k, i) => { m[k] = WHITE_BASES[i] + oct; });
+    BLACK_KEYS_ROW.forEach((k, i) => { m[k] = BLACK_BASES[i] + oct; });
+    return m;
+}
+KEYBOARD_MAP = buildKeyMap(CURRENT_OCTAVE);
+
+// Key label for each BASE note
+const BASE_TO_KEY = {};
+WHITE_KEYS_ROW.forEach((k, i) => { BASE_TO_KEY[WHITE_BASES[i]] = k.toUpperCase(); });
+BLACK_KEYS_ROW.forEach((k, i) => { BASE_TO_KEY[BLACK_BASES[i]] = k.toUpperCase(); });
+
+function note3DPos(note, radius = 3) {
+    const idx = ALL_NOTES.indexOf(note);
+    const angle = (idx / ALL_NOTES.length) * Math.PI * 2;
+    return new THREE.Vector3(Math.cos(angle)*radius, 0.3 + Math.sin(angle*2.3)*0.8, Math.sin(angle)*radius);
 }
 
-const NOTE_COLORS = {
-    'C': new THREE.Color(0.95, 0.15, 0.15),   // Red
-    'D': new THREE.Color(0.95, 0.60, 0.10),   // Orange
-    'E': new THREE.Color(0.90, 0.85, 0.10),   // Yellow
-    'F': new THREE.Color(0.20, 0.80, 0.30),   // Green
-    'G': new THREE.Color(0.10, 0.70, 0.85),   // Cyan
-    'A': new THREE.Color(0.40, 0.30, 0.95),   // Blue
-    'B': new THREE.Color(0.85, 0.20, 0.80),   // Purple
-};
-
-const KEYBOARD_MAP = {
-    // Octave 3 (C3-B3) - left hand
-    'z': 'C3', 's': 'C#3', 'x': 'D3', 'd': 'D#3', 'c': 'E3',
-    'v': 'F3', 'g': 'F#3', 'b': 'G3', 'h': 'G#3', 'n': 'A3', 'j': 'A#3', 'm': 'B3',
-    // Octave 4 (C4-B4) - right hand
-    'q': 'C4', '2': 'C#4', 'w': 'D4', '3': 'D#4', 'e': 'E4',
-    'r': 'F4', '5': 'F#4', 't': 'G4', '6': 'G#4', 'y': 'A4', '7': 'A#4', 'u': 'B4',
-    'i': 'C5',
-};
-
-// ─── WEB AUDIO ENGINE ───────────────────────────────────────────
+// ─── SYNTH ENGINE ──────────────────────────────────────────────
 class SynthEngine {
     constructor() {
-        this.ctx = null;
-        this.masterGain = null;
-        this.analyser = null;
-        this.activeNodes = new Map(); // note -> {nodes, gain, filter, lfo}
-        this.preset = 'nebula';
-        this.volume = 0.7;
-        this.freqData = null;
-        this.timeData = null;
-        this.initialized = false;
+        this.ctx = null; this.masterGain = null; this.analyser = null;
+        this.activeNodes = new Map(); this.preset = 'nebula';
+        this.volume = 0.7; this.freqData = null; this.timeData = null; this.initialized = false;
     }
-
     init() {
         if (this.initialized) return;
         this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-        this.masterGain = this.ctx.createGain();
-        this.masterGain.gain.value = this.volume;
-        this.analyser = this.ctx.createAnalyser();
-        this.analyser.fftSize = 256;
+        this.masterGain = this.ctx.createGain(); this.masterGain.gain.value = this.volume;
+        this.analyser = this.ctx.createAnalyser(); this.analyser.fftSize = 256;
         this.freqData = new Uint8Array(this.analyser.frequencyBinCount);
         this.timeData = new Uint8Array(this.analyser.frequencyBinCount);
-        this.masterGain.connect(this.analyser);
-        this.analyser.connect(this.ctx.destination);
+        this.masterGain.connect(this.analyser); this.analyser.connect(this.ctx.destination);
         this.initialized = true;
     }
-
-    resume() {
-        if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
-    }
-
-    setVolume(v) {
-        this.volume = v;
-        if (this.masterGain) this.masterGain.gain.setTargetAtTime(v, this.ctx.currentTime, 0.05);
-    }
-
+    resume() { if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume(); }
+    setVolume(v) { this.volume = v; if (this.masterGain) this.masterGain.gain.setTargetAtTime(v, this.ctx.currentTime, 0.05); }
     setPreset(p) { this.preset = p; }
-
     getPresetConfig() {
-        const cfg = {
-            nebula: { oscTypes: ['sawtooth','sine'], detune: 7, filter: 1200, filterEnv: 0.6, attack: 0.01, release: 0.3, sub: 0.3, chorus: true },
-            crystal: { oscTypes: ['sine','sine'], detune: 12, filter: 3000, filterEnv: 0.3, attack: 0.005, release: 0.6, sub: 0, chorus: true },
-            bass: { oscTypes: ['sawtooth','square'], detune: 3, filter: 400, filterEnv: 0.8, attack: 0.02, release: 0.25, sub: 0.5, chorus: false },
-            pad: { oscTypes: ['sine','triangle'], detune: 8, filter: 2000, filterEnv: 0.4, attack: 0.2, release: 1.0, sub: 0.2, chorus: true },
-            lead: { oscTypes: ['square','sawtooth'], detune: 5, filter: 2500, filterEnv: 0.5, attack: 0.005, release: 0.2, sub: 0, chorus: false },
-        };
-        return cfg[this.preset] || cfg.nebula;
+        return ({
+            nebula: { oscTypes:['sawtooth','sine'], detune:7, filter:1200, attack:0.015, release:0.7, sub:0.3, chorus:true },
+            crystal:{ oscTypes:['sine','sine'], detune:12, filter:3000, attack:0.008, release:1.0, sub:0, chorus:true },
+            bass:   { oscTypes:['sawtooth','square'], detune:3, filter:400, attack:0.03, release:0.6, sub:0.5, chorus:false },
+            pad:    { oscTypes:['sine','triangle'], detune:8, filter:2000, attack:0.3, release:2.0, sub:0.2, chorus:true },
+            lead:   { oscTypes:['square','sawtooth'], detune:5, filter:2500, attack:0.008, release:0.5, sub:0, chorus:false },
+        })[this.preset];
     }
-
-    noteOn(note, velocity = 0.7) {
+    noteOn(note, velocity=0.7) {
         if (!this.ctx || !this.masterGain) return;
         if (this.activeNodes.has(note)) this.noteOff(note);
         const freq = freqFromNote(note);
         const cfg = this.getPresetConfig();
         const now = this.ctx.currentTime;
+        const g = { nodes:[], gain:null, filter:null, stopTimer:null };
 
-        const noteGroup = { nodes: [], gain: null, filter: null, stopTimer: null };
-
-        // Sub oscillator
         if (cfg.sub > 0) {
-            const sub = this.ctx.createOscillator();
-            sub.type = 'sine';
-            sub.frequency.value = freq * 0.5;
-            const subG = this.ctx.createGain();
-            subG.gain.value = cfg.sub * velocity * 0.2;
-            sub.connect(subG);
-            subG.connect(this.masterGain);
-            sub.start(now);
-            noteGroup.nodes.push(sub, subG);
+            const sub = this.ctx.createOscillator(); sub.type='sine'; sub.frequency.value=freq*0.5;
+            const subG = this.ctx.createGain(); subG.gain.value=cfg.sub*velocity*0.2;
+            sub.connect(subG); subG.connect(this.masterGain); sub.start(now);
+            g.nodes.push(sub, subG);
         }
-
-        // Main oscillators
-        const filter = this.ctx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.value = cfg.filter;
-        filter.Q.value = 2;
-        noteGroup.filter = filter;
-
-        const mixGain = this.ctx.createGain();
-        mixGain.gain.value = 0;
-        noteGroup.gain = mixGain;
-
+        const filter = this.ctx.createBiquadFilter(); filter.type='lowpass'; filter.frequency.value=cfg.filter; filter.Q.value=2;
+        g.filter = filter;
+        const mixG = this.ctx.createGain(); mixG.gain.value=0; g.gain = mixG;
         cfg.oscTypes.forEach((type, i) => {
-            const osc = this.ctx.createOscillator();
-            osc.type = type;
-            osc.frequency.value = freq + (i === 1 ? cfg.detune : 0);
-            const oscG = this.ctx.createGain();
-            oscG.gain.value = velocity * (0.4 / cfg.oscTypes.length);
-            osc.connect(oscG);
-            oscG.connect(filter);
-            noteGroup.nodes.push(osc, oscG);
-            osc.start(now);
+            const osc = this.ctx.createOscillator(); osc.type=type; osc.frequency.value=freq+(i===1?cfg.detune:0);
+            const og = this.ctx.createGain(); og.gain.value=velocity*(0.4/cfg.oscTypes.length);
+            osc.connect(og); og.connect(filter); g.nodes.push(osc, og); osc.start(now);
         });
-
-        // LFO for chorus
         if (cfg.chorus) {
-            const lfo = this.ctx.createOscillator();
-            lfo.type = 'sine';
-            lfo.frequency.value = 3.5;
-            const lfoG = this.ctx.createGain();
-            lfoG.gain.value = 2;
-            lfo.connect(lfoG);
-            lfoG.connect(filter.frequency);
-            lfo.start(now);
-            noteGroup.nodes.push(lfo, lfoG);
+            const lfo = this.ctx.createOscillator(); lfo.type='sine'; lfo.frequency.value=3.5;
+            const lg = this.ctx.createGain(); lg.gain.value=2; lfo.connect(lg); lg.connect(filter.frequency); lfo.start(now);
+            g.nodes.push(lfo, lg);
         }
-
-        // Noise burst for attack
-        if (this.preset === 'crystal' || this.preset === 'lead') {
-            const bufSize = this.ctx.sampleRate * 0.04;
-            const buf = this.ctx.createBuffer(1, bufSize, this.ctx.sampleRate);
-            const data = buf.getChannelData(0);
-            for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i/bufSize, 2);
-            const noise = this.ctx.createBufferSource();
-            noise.buffer = buf;
-            const noiseG = this.ctx.createGain();
-            noiseG.gain.value = velocity * 0.15;
-            noise.connect(noiseG);
-            noiseG.connect(this.masterGain);
-            noise.start(now);
-            noteGroup.nodes.push(noise, noiseG);
-        }
-
-        filter.connect(mixGain);
-        mixGain.connect(this.masterGain);
-
-        // Envelope
-        mixGain.gain.setValueAtTime(0, now);
-        mixGain.gain.linearRampToValueAtTime(velocity * 0.6, now + cfg.attack);
-        // Filter envelope
-        filter.frequency.setValueAtTime(100, now);
-        filter.frequency.exponentialRampToValueAtTime(cfg.filter, now + cfg.attack + 0.05);
-
-        this.activeNodes.set(note, noteGroup);
+        filter.connect(mixG); mixG.connect(this.masterGain);
+        mixG.gain.setValueAtTime(0, now);
+        mixG.gain.linearRampToValueAtTime(velocity*0.55, now+cfg.attack);
+        filter.frequency.setValueAtTime(80, now);
+        filter.frequency.exponentialRampToValueAtTime(cfg.filter, now+cfg.attack+0.06);
+        this.activeNodes.set(note, g);
     }
-
     noteOff(note) {
-        const g = this.activeNodes.get(note);
-        if (!g) return;
+        const g = this.activeNodes.get(note); if (!g) return;
         const cfg = this.getPresetConfig();
         const now = this.ctx.currentTime;
-        const release = g.gain && g.gain.gain ? (cfg.release || 0.3) : 0.01;
-
+        const release = cfg.release || 0.5;
         if (g.gain && g.gain.gain) {
             g.gain.gain.cancelScheduledValues(now);
             g.gain.gain.setValueAtTime(g.gain.gain.value, now);
-            g.gain.gain.exponentialRampToValueAtTime(0.001, now + release);
+            g.gain.gain.exponentialRampToValueAtTime(0.0001, now + release);
         }
         if (g.filter) {
             g.filter.frequency.cancelScheduledValues(now);
-            g.filter.frequency.exponentialRampToValueAtTime(20, now + release);
+            g.filter.frequency.setValueAtTime(g.filter.frequency.value, now);
+            g.filter.frequency.exponentialRampToValueAtTime(10, now + release * 0.8);
         }
-
         g.stopTimer = setTimeout(() => {
-            g.nodes.forEach(n => {
-                try { n.stop(); } catch(e) {}
-                try { n.disconnect(); } catch(e) {}
-            });
+            g.nodes.forEach(n => { try { n.stop(); } catch(e){} try { n.disconnect(); } catch(e){} });
             this.activeNodes.delete(note);
-        }, (release + 0.05) * 1000);
+        }, (release + 0.1) * 1000);
     }
-
-    allNotesOff() {
-        this.activeNodes.forEach((g, note) => this.noteOff(note));
-    }
-
+    allNotesOff() { this.activeNodes.forEach((g, note) => this.noteOff(note)); }
     getAnalyserData() {
-        if (!this.analyser) return { freq: new Uint8Array(128), time: new Uint8Array(128) };
+        if (!this.analyser) return {freq:new Uint8Array(128), time:new Uint8Array(128)};
         this.analyser.getByteFrequencyData(this.freqData);
         this.analyser.getByteTimeDomainData(this.timeData);
-        return { freq: this.freqData, time: this.timeData };
+        return {freq:this.freqData, time:this.timeData};
     }
 }
 
-// ─── THREE.JS SCENE ─────────────────────────────────────────────
+// ─── BRANCH SYSTEM ──────────────────────────────────────────────
+class BranchSystem {
+    constructor(scene, maxNotes=24) {
+        this.scene = scene;
+        this.branches = new Map();
+        this.maxVerts = maxNotes * 200 * 2;
+        const geo = new THREE.BufferGeometry();
+        this.posArr = new Float32Array(this.maxVerts*3);
+        this.colArr = new Float32Array(this.maxVerts*3);
+        geo.setAttribute('position', new THREE.BufferAttribute(this.posArr,3));
+        geo.setAttribute('color', new THREE.BufferAttribute(this.colArr,3));
+        this.mat = new THREE.LineBasicMaterial({ vertexColors:true, transparent:true, opacity:0.7, blending:THREE.AdditiveBlending, depthWrite:false });
+        this.mesh = new THREE.LineSegments(geo, this.mat);
+        this.mesh.frustumCulled = false; this.mesh.visible = false;
+        scene.add(this.mesh);
+        this.vertCount = 0;
+    }
+    noteOn(note) {
+        if (this.branches.has(note)) return;
+        const color = NOTE_COLORS[note.replace(/[0-9]+/g,'')] || new THREE.Color(0.5,0.5,0.5);
+        const target = note3DPos(note);
+        const seed = ALL_NOTES.indexOf(note) * 137.508;
+        const segs = [];
+        this._genBranch(segs, new THREE.Vector3(0,0.5,0), target, 3, 0, seed);
+        this.branches.set(note, { note, color:color.clone(), target, segments:segs, progress:0, active:true });
+    }
+    _genBranch(segs, start, end, depth, idx, seed) {
+        if (depth <= 0) return;
+        segs.push({start:start.clone(), end:end.clone(), depth});
+        if (depth > 1) {
+            const t = [0.3, 0.6][idx%2];
+            const mid = start.clone().lerp(end, t);
+            const n = depth === 3 ? 2 : 1;
+            for (let i = 0; i < n; i++) {
+                const dir = new THREE.Vector3(
+                    Math.sin(seed+idx*7.3+i*13.7)*1.5, Math.cos(seed+idx*11.2+i*5.3)*0.8, Math.cos(seed+idx*3.7+i*9.1)*1.5
+                ).normalize();
+                const subEnd = mid.clone().add(dir.multiplyScalar(end.distanceTo(start)*(0.35+Math.random()*0.15)));
+                this._genBranch(segs, mid, subEnd, depth-1, idx+1, seed+i*47);
+            }
+        }
+    }
+    noteOff(note) { const b = this.branches.get(note); if (b) b.active = false; }
+    update(dt) {
+        let vi = 0;
+        this.branches.forEach((b) => {
+            if (!b.active) { b.progress -= dt*1.2; if (b.progress <= 0) { this.branches.delete(b.note); return; } }
+            else b.progress = Math.min(1, b.progress + dt*1.5);
+            const p = b.progress; const alpha = Math.min(1, p*2);
+            const c = new THREE.Vector3(0,0.5,0);
+            b.segments.forEach((seg, si) => {
+                const segP = si/b.segments.length; if (segP > p) return;
+                if (vi+2 > this.maxVerts) return;
+                const growth = Math.min(1, p*2 - segP);
+                const sPos = seg.start.clone().lerp(c, 1-Math.min(1,growth*1.5));
+                const ePos = seg.end.clone().lerp(c, 1-Math.min(1,growth*1.5));
+                this.posArr[vi*3]=sPos.x; this.posArr[vi*3+1]=sPos.y; this.posArr[vi*3+2]=sPos.z;
+                this.posArr[vi*3+3]=ePos.x; this.posArr[vi*3+4]=ePos.y; this.posArr[vi*3+5]=ePos.z;
+                const fade = Math.max(0,1-segP*0.5)*alpha*(b.active?1:Math.max(0,p*2));
+                const c2 = b.color.clone().multiplyScalar(fade);
+                this.colArr[vi*3]=c2.r; this.colArr[vi*3+1]=c2.g; this.colArr[vi*3+2]=c2.b;
+                this.colArr[vi*3+3]=c2.r; this.colArr[vi*3+4]=c2.g; this.colArr[vi*3+5]=c2.b;
+                vi += 2;
+            });
+        });
+        this.vertCount = vi;
+        if (vi > 0) {
+            this.mesh.visible = true;
+            this.mesh.geometry.attributes.position.needsUpdate = true;
+            this.mesh.geometry.attributes.color.needsUpdate = true;
+            this.mesh.geometry.setDrawRange(0, vi);
+        } else this.mesh.visible = false;
+    }
+}
+
+// ─── 3D SCENE ───────────────────────────────────────────────────
 class VisualScene {
     constructor(container) {
         this.container = container;
         this.activeNotes = new Set();
         this.bursts = [];
-        this.noteOrbs = {};
         this.audioHistory = [];
-        this.beatPhase = 0;
-        this.beatTime = 0;
 
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color(0x050510);
 
-        const w = window.innerWidth;
-        const h = window.innerHeight;
+        const w=innerWidth, h=innerHeight;
         this.camera = new THREE.PerspectiveCamera(60, w/h, 0.1, 100);
-        this.camera.position.set(0, 2, 10);
-        this.camera.lookAt(0, 0, 0);
+        this.camera.position.set(0, 1.5, 8);
 
-        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+        this.renderer = new THREE.WebGLRenderer({antialias:true, alpha:false});
         this.renderer.setSize(w, h);
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        this.renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
         this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
         this.renderer.toneMappingExposure = 1.2;
         container.appendChild(this.renderer.domElement);
 
-        // Post-processing
         this.composer = new EffectComposer(this.renderer);
-        const renderPass = new RenderPass(this.scene, this.camera);
-        this.composer.addPass(renderPass);
-
-        this.bloom = new UnrealBloomPass(new THREE.Vector2(w, h), 0.6, 0.3, 0.15);
+        this.composer.addPass(new RenderPass(this.scene, this.camera));
+        this.bloom = new UnrealBloomPass(new THREE.Vector2(w, h), 0.5, 0.3, 0.12);
         this.composer.addPass(this.bloom);
 
-        // Controls (subtle auto-orbit with limited manual override)
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.controls.enableDamping = true;
         this.controls.dampingFactor = 0.05;
         this.controls.autoRotate = true;
-        this.controls.autoRotateSpeed = 0.8;
-        this.controls.target.set(0, 0, 0);
-        this.controls.maxPolarAngle = Math.PI / 2.2;
-        this.controls.minDistance = 4;
-        this.controls.maxDistance = 20;
+        this.controls.autoRotateSpeed = 0.6;
+        this.controls.target.set(0, 0.3, 0);
+        this.controls.maxPolarAngle = Math.PI/2.2;
+        this.controls.minDistance = 3;
+        this.controls.maxDistance = 18;
 
         this.buildScene();
-        window.addEventListener('resize', () => this.onResize());
+        addEventListener('resize', () => this.onResize());
     }
 
     buildScene() {
         const S = this.scene;
 
-        // Ambient - dim blue
-        const amb = new THREE.AmbientLight(0x111122, 0.4);
-        S.add(amb);
+        // Lights
+        S.add(new THREE.AmbientLight(0x111133, 0.3));
+        const dir = new THREE.DirectionalLight(0x8899cc, 0.8); dir.position.set(3,8,4); S.add(dir);
 
-        // Main directional
-        const dir = new THREE.DirectionalLight(0x8899cc, 1);
-        dir.position.set(5, 10, 5);
-        S.add(dir);
-
-        // 3 Colored point lights orbiting
+        // 3 orbiting colored lights
         this.orbitLights = [];
-        const lightColors = [0xff3366, 0x33ff66, 0x3366ff];
-        for (let i = 0; i < 3; i++) {
-            const pl = new THREE.PointLight(lightColors[i], 1.5, 15);
-            pl.position.set(Math.cos(i * 2.094) * 5, 1 + Math.sin(i * 1.3) * 1, Math.sin(i * 2.094) * 5);
+        for (let i=0;i<3;i++) {
+            const pl = new THREE.PointLight([0xff3366,0x33ff66,0x3366ff][i], 1.2, 12);
+            pl.position.set(Math.cos(i*2.094)*4, 0.3+Math.sin(i*1.3)*1, Math.sin(i*2.094)*4);
             S.add(pl);
-            this.orbitLights.push({ light: pl, angle: i * 2.094, speed: 0.3 + i * 0.1, color: new THREE.Color(lightColors[i]) });
+            this.orbitLights.push({light:pl, angle:i*2.094, speed:0.3+i*0.08, color:new THREE.Color([0xff3366,0x33ff66,0x3366ff][i])});
         }
 
-        // Star field
-        const starCount = 4000;
-        const starGeo = new THREE.BufferGeometry();
-        const starPos = new Float32Array(starCount * 3);
-        const starSizes = new Float32Array(starCount);
-        const starColors = new Float32Array(starCount * 3);
-        for (let i = 0; i < starCount; i++) {
-            const theta = Math.random() * Math.PI * 2;
-            const phi = Math.acos(2 * Math.random() - 1);
-            const r = 25 + Math.random() * 35;
-            starPos[i*3] = r * Math.sin(phi) * Math.cos(theta);
-            starPos[i*3+1] = r * Math.cos(phi) * (0.3 + Math.random() * 0.7);
-            starPos[i*3+2] = r * Math.sin(phi) * Math.sin(theta);
-            starSizes[i] = 0.3 + Math.random() * 0.8;
-            const tc = 0.4 + Math.random() * 0.6;
-            starColors[i*3] = tc * (0.6 + Math.random() * 0.4);
-            starColors[i*3+1] = tc * (0.6 + Math.random() * 0.4);
-            starColors[i*3+2] = tc;
+        // ─── Stars ───
+        const sN=3000; const sGeo=new THREE.BufferGeometry(); const sP=new Float32Array(sN*3);
+        for (let i=0;i<sN;i++) {
+            const t=Math.random()*Math.PI*2, p=Math.acos(2*Math.random()-1), r=20+Math.random()*30;
+            sP[i*3]=r*Math.sin(p)*Math.cos(t); sP[i*3+1]=r*Math.cos(p)*(0.3+Math.random()*0.7); sP[i*3+2]=r*Math.sin(p)*Math.sin(t);
         }
-        starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
-        starGeo.setAttribute('size', new THREE.BufferAttribute(starSizes, 1));
-        starGeo.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
-        const starMat = new THREE.PointsMaterial({
-            size: 0.12, vertexColors: true, transparent: true, opacity: 0.8,
-            blending: THREE.AdditiveBlending, depthWrite: false,
-            sizeAttenuation: true,
-        });
-        this.stars = new THREE.Points(starGeo, starMat);
+        sGeo.setAttribute('position', new THREE.BufferAttribute(sP,3));
+        this.stars = new THREE.Points(sGeo, new THREE.PointsMaterial({map:ROUND_TEX, size:0.25, transparent:true, opacity:0.7, blending:THREE.AdditiveBlending, depthWrite:false, color:0x8899cc}));
         S.add(this.stars);
 
-        // Nebula particles (around center)
-        const nebCount = 2000;
-        const nebGeo = new THREE.BufferGeometry();
-        const nebPos = new Float32Array(nebCount * 3);
-        const nebCol = new Float32Array(nebCount * 3);
-        this.nebulaColors = [];
-        for (let i = 0; i < nebCount; i++) {
-            const theta = Math.random() * Math.PI * 2;
-            const phi = Math.acos(2 * Math.random() - 1);
-            const r = 0.5 + Math.random() * 4;
-            nebPos[i*3] = r * Math.sin(phi) * Math.cos(theta);
-            nebPos[i*3+1] = r * Math.cos(phi) * (0.5 + Math.random() * 0.5);
-            nebPos[i*3+2] = r * Math.sin(phi) * Math.sin(theta);
-            const hue = Math.random();
-            const c = new THREE.Color().setHSL(hue, 0.8, 0.4 + Math.random() * 0.3);
-            nebCol[i*3] = c.r; nebCol[i*3+1] = c.g; nebCol[i*3+2] = c.b;
-            this.nebulaColors.push(c);
+        // ─── Nebula particles ───
+        const nN=1500; const nGeo=new THREE.BufferGeometry(); const nP=new Float32Array(nN*3); const nC=new Float32Array(nN*3);
+        for (let i=0;i<nN;i++) {
+            const t=Math.random()*Math.PI*2, p=Math.acos(2*Math.random()-1), r=0.5+Math.random()*3.5;
+            nP[i*3]=r*Math.sin(p)*Math.cos(t); nP[i*3+1]=r*Math.cos(p)*(0.5+Math.random()*0.5); nP[i*3+2]=r*Math.sin(p)*Math.sin(t);
+            const c=new THREE.Color().setHSL(0.55+Math.random()*0.3, 0.6, 0.3+Math.random()*0.3);
+            nC[i*3]=c.r; nC[i*3+1]=c.g; nC[i*3+2]=c.b;
         }
-        nebGeo.setAttribute('position', new THREE.BufferAttribute(nebPos, 3));
-        nebGeo.setAttribute('color', new THREE.BufferAttribute(nebCol, 3));
-        const nebMat = new THREE.PointsMaterial({
-            size: 0.08, vertexColors: true, transparent: true, opacity: 0.6,
-            blending: THREE.AdditiveBlending, depthWrite: false,
-            sizeAttenuation: true,
-        });
-        this.nebulaParticles = new THREE.Points(nebGeo, nebMat);
-        S.add(this.nebulaParticles);
-        this.nebulaPos = nebPos;
+        nGeo.setAttribute('position', new THREE.BufferAttribute(nP,3));
+        nGeo.setAttribute('color', new THREE.BufferAttribute(nC,3));
+        this.nebula = new THREE.Points(nGeo, new THREE.PointsMaterial({map:ROUND_TEX, size:0.12, vertexColors:true, transparent:true, opacity:0.5, blending:THREE.AdditiveBlending, depthWrite:false}));
+        S.add(this.nebula);
+        this.nebulaPos = nP;
 
-        // Central Torus Knot
-        const tkGeo = new THREE.TorusKnotGeometry(0.9, 0.35, 180, 24);
-        const tkMat = new THREE.MeshPhysicalMaterial({
-            color: 0x4466aa, emissive: 0x223377, emissiveIntensity: 0.5,
-            metalness: 0.3, roughness: 0.2, clearcoat: 0.4,
-            transparent: true, opacity: 0.9,
-            envMapIntensity: 0.6,
-        });
-        this.torusKnot = new THREE.Mesh(tkGeo, tkMat);
-        this.torusKnot.position.y = 0.5;
-        S.add(this.torusKnot);
+        // ─── ENERGY CORE (replaces torus knot) ───
+        this.core = new THREE.Group();
+        this.core.position.y = 0.4;
 
-        // Inner glowing sphere
-        const glowGeo = new THREE.SphereGeometry(0.3, 32, 32);
-        const glowMat = new THREE.MeshBasicMaterial({
-            color: 0x4488ff, transparent: true, opacity: 0.3,
-        });
-        this.glowSphere = new THREE.Mesh(glowGeo, glowMat);
-        this.glowSphere.position.y = 0.5;
-        S.add(this.glowSphere);
+        // Layer 1: Outer geodesic wireframe (icosahedron sub 2)
+        const ico1 = new THREE.IcosahedronGeometry(1.0, 2);
+        const edge1 = new THREE.EdgesGeometry(ico1);
+        this.coreWire1 = new THREE.LineSegments(edge1, new THREE.LineBasicMaterial({color:0x4488ff, transparent:true, opacity:0.12, blending:THREE.AdditiveBlending}));
+        this.core.add(this.coreWire1);
 
-        // Orbital rings
-        this.orbitRings = [];
-        for (let i = 0; i < 3; i++) {
-            const ringGeo = new THREE.RingGeometry(1.8 + i * 0.8, 1.82 + i * 0.8, 64);
-            const ringMat = new THREE.MeshBasicMaterial({
-                color: new THREE.Color().setHSL(i * 0.33, 0.6, 0.3),
-                transparent: true, opacity: 0.08 + i * 0.04,
-                side: THREE.DoubleSide, depthWrite: false,
+        // Layer 2: Mid wireframe (sub 1, slightly larger)
+        const ico2 = new THREE.IcosahedronGeometry(1.15, 1);
+        const edge2 = new THREE.EdgesGeometry(ico2);
+        this.coreWire2 = new THREE.LineSegments(edge2, new THREE.LineBasicMaterial({color:0x88ccff, transparent:true, opacity:0.08, blending:THREE.AdditiveBlending}));
+        this.core.add(this.coreWire2);
+
+        // Layer 3: Inner star (octahedron)
+        const ico3 = new THREE.OctahedronGeometry(0.6, 0);
+        const edge3 = new THREE.EdgesGeometry(ico3);
+        this.coreWire3 = new THREE.LineSegments(edge3, new THREE.LineBasicMaterial({color:0xff88cc, transparent:true, opacity:0.15, blending:THREE.AdditiveBlending}));
+        this.core.add(this.coreWire3);
+
+        // Vertex glow particles (on the outer sphere surface)
+        const vN = 400; const vGeo = new THREE.BufferGeometry(); const vP = new Float32Array(vN*3); const vC = new Float32Array(vN*3);
+        for (let i=0;i<vN;i++) {
+            const t=Math.random()*Math.PI*2, p=Math.acos(2*Math.random()-1), r=0.9+Math.random()*0.15;
+            vP[i*3]=r*Math.sin(p)*Math.cos(t); vP[i*3+1]=r*Math.cos(p); vP[i*3+2]=r*Math.sin(p)*Math.sin(t);
+            const c=new THREE.Color().setHSL(0.6+Math.random()*0.3, 0.8, 0.5+Math.random()*0.3);
+            vC[i*3]=c.r; vC[i*3+1]=c.g; vC[i*3+2]=c.b;
+        }
+        vGeo.setAttribute('position', new THREE.BufferAttribute(vP,3));
+        vGeo.setAttribute('color', new THREE.BufferAttribute(vC,3));
+        this.coreParts = new THREE.Points(vGeo, new THREE.PointsMaterial({map:ROUND_TEX, size:0.06, vertexColors:true, transparent:true, opacity:0.7, blending:THREE.AdditiveBlending}));
+        this.core.add(this.coreParts);
+
+        // Inner glow sphere
+        this.coreGlow = new THREE.Mesh(new THREE.SphereGeometry(0.2,16,16), new THREE.MeshBasicMaterial({color:0x4488ff, transparent:true, opacity:0.4}));
+        this.core.add(this.coreGlow);
+
+        // Energy ring around core
+        const ringGeo = new THREE.RingGeometry(1.3, 1.32, 48);
+        this.coreRing = new THREE.Mesh(ringGeo, new THREE.MeshBasicMaterial({color:0x4488ff, transparent:true, opacity:0.1, side:THREE.DoubleSide, depthWrite:false}));
+        this.coreRing.rotation.x = Math.PI/2;
+        this.core.add(this.coreRing);
+
+        // Second ring tilted
+        const ringGeo2 = new THREE.RingGeometry(1.5, 1.51, 48);
+        this.coreRing2 = new THREE.Mesh(ringGeo2, new THREE.MeshBasicMaterial({color:0x88ccff, transparent:true, opacity:0.06, side:THREE.DoubleSide, depthWrite:false}));
+        this.coreRing2.rotation.x = Math.PI/3;
+        this.coreRing2.rotation.z = Math.PI/4;
+        this.core.add(this.coreRing2);
+
+        S.add(this.core);
+
+        // ─── Wave floor ───
+        const fGeo = new THREE.PlaneGeometry(18, 18, 48, 48);
+        this.floor = new THREE.Mesh(fGeo, new THREE.MeshPhysicalMaterial({
+            color:0x0a0a22, emissive:0x08081a, emissiveIntensity:0.2, metalness:0.9, roughness:0.3, transparent:true, opacity:0.35, side:THREE.DoubleSide
+        }));
+        this.floor.rotation.x=-Math.PI/2; this.floor.position.y=-0.8; S.add(this.floor);
+        this.floorPos = fGeo.attributes.position;
+
+        const grid = new THREE.GridHelper(14, 28, 0x224488, 0x113366);
+        grid.position.y=-0.79; grid.material.transparent=true; grid.material.opacity=0.1; S.add(grid);
+
+        // ─── BURST PARTICLES ───
+        this.MAX_BURSTS=8000;
+        const bg=new THREE.BufferGeometry();
+        this.bP=new Float32Array(this.MAX_BURSTS*3);
+        this.bC=new Float32Array(this.MAX_BURSTS*3);
+        this.bS=new Float32Array(this.MAX_BURSTS);
+        bg.setAttribute('position', new THREE.BufferAttribute(this.bP,3));
+        bg.setAttribute('color', new THREE.BufferAttribute(this.bC,3));
+        bg.setAttribute('size', new THREE.BufferAttribute(this.bS,1));
+        this.burstMesh = new THREE.Points(bg, new THREE.PointsMaterial({
+            map:ROUND_TEX, size:0.4, vertexColors:true, transparent:true, opacity:1,
+            blending:THREE.AdditiveBlending, depthWrite:false, sizeAttenuation:true
+        }));
+        S.add(this.burstMesh);
+
+        // ─── BRANCHES ───
+        this.branches = new BranchSystem(S);
+    }
+
+    triggerNoteBurst(note, velocity=0.7) {
+        const base = note.replace(/[0-9]+/g,'');
+        const color = NOTE_COLORS[base] || new THREE.Color(0.5,0.5,0.5);
+        const pos = note3DPos(note, 0.5);
+        const count = Math.floor(25 + velocity*50);
+        for (let i=0; i<count && this.bursts.length<this.MAX_BURSTS; i++) {
+            const theta=Math.random()*Math.PI*2, phi=Math.acos(2*Math.random()-1), speed=3+Math.random()*6;
+            this.bursts.push({
+                x:pos.x, y:pos.y, z:pos.z,
+                vx:Math.sin(phi)*Math.cos(theta)*speed,
+                vy:Math.cos(phi)*speed+Math.random()*3,
+                vz:Math.sin(phi)*Math.sin(theta)*speed,
+                r:color.r, g:color.g, b:color.b,
+                life:0.8+Math.random()*0.8, maxLife:0.8+Math.random()*0.8,
+                size:0.12+Math.random()*0.4
             });
-            const ring = new THREE.Mesh(ringGeo, ringMat);
-            ring.rotation.x = Math.PI / 2 + (i * 0.3);
-            ring.rotation.z = i * 0.5;
-            ring.position.y = 0.5;
-            S.add(ring);
-            this.orbitRings.push(ring);
         }
-
-        // Wave floor
-        const floorGeo = new THREE.PlaneGeometry(20, 20, 64, 64);
-        const floorMat = new THREE.MeshPhysicalMaterial({
-            color: 0x111133, emissive: 0x0a0a22, emissiveIntensity: 0.3,
-            metalness: 0.8, roughness: 0.3, transparent: true, opacity: 0.5,
-            side: THREE.DoubleSide, wireframe: false,
-        });
-        this.floor = new THREE.Mesh(floorGeo, floorMat);
-        this.floor.rotation.x = -Math.PI / 2;
-        this.floor.position.y = -0.8;
-        S.add(this.floor);
-        this.floorPos = floorGeo.attributes.position;
-
-        // Secondary floor grid
-        const gridHelper = new THREE.GridHelper(16, 32, 0x3366aa, 0x224488);
-        gridHelper.position.y = -0.79;
-        gridHelper.material.transparent = true;
-        gridHelper.material.opacity = 0.15;
-        S.add(gridHelper);
-
-        // Note burst system (re-use buffer)
-        this.burstGeo = new THREE.BufferGeometry();
-        this.burstCount = 0;
-        this.burstPos = new Float32Array(2000 * 3);
-        this.burstCol = new Float32Array(2000 * 3);
-        this.burstSiz = new Float32Array(2000);
-        this.burstGeo.setAttribute('position', new THREE.BufferAttribute(this.burstPos, 3));
-        this.burstGeo.setAttribute('color', new THREE.BufferAttribute(this.burstCol, 3));
-        this.burstGeo.setAttribute('size', new THREE.BufferAttribute(this.burstSiz, 1));
-        const burstMat = new THREE.PointsMaterial({
-            size: 0.15, vertexColors: true, transparent: true, opacity: 0.9,
-            blending: THREE.AdditiveBlending, depthWrite: false,
-            sizeAttenuation: true,
-        });
-        this.burstPoints = new THREE.Points(this.burstGeo, burstMat);
-        S.add(this.burstPoints);
+        this.branches.noteOn(note);
     }
 
-    triggerNoteBurst(note, velocity = 0.7) {
-        const baseName = note.replace(/[0-9]+/g, '');
-        const color = NOTE_COLORS[baseName] || new THREE.Color(0.5, 0.5, 0.5);
-        const noteIdx = ALL_NOTES.indexOf(note);
-        const xPos = (noteIdx / ALL_NOTES.length - 0.5) * 6;
-
-        const burstSize = Math.floor(15 + velocity * 25);
-        const start = this.burstCount;
-        for (let i = 0; i < burstSize && this.burstCount < 2000; i++) {
-            const idx = this.burstCount;
-            const theta = Math.random() * Math.PI * 2;
-            const phi = Math.acos(2 * Math.random() - 1);
-            const r = 0.2 + Math.random() * 1.5;
-            this.burstPos[idx*3] = xPos + r * Math.sin(phi) * Math.cos(theta);
-            this.burstPos[idx*3+1] = 1.2 + Math.abs(r * Math.cos(phi));
-            this.burstPos[idx*3+2] = r * Math.sin(phi) * Math.sin(theta) * 0.5;
-            this.burstCol[idx*3] = color.r; this.burstCol[idx*3+1] = color.g; this.burstCol[idx*3+2] = color.b;
-            this.burstSiz[idx] = 0.1 + Math.random() * 0.25;
-            this.burstCount++;
+    updateBursts(dt) {
+        for (let i=this.bursts.length-1; i>=0; i--) {
+            const b=this.bursts[i];
+            b.x+=b.vx*dt; b.y+=b.vy*dt; b.z+=b.vz*dt;
+            b.vy-=2.8*dt; b.vx*=0.98; b.vy*=0.98; b.vz*=0.98;
+            b.life-=dt*(0.3+Math.random()*0.15);
+            if (b.life<=0) { this.bursts.splice(i,1); continue; }
         }
-        this.burstPoints.geometry.attributes.position.needsUpdate = true;
-        this.burstPoints.geometry.attributes.color.needsUpdate = true;
-        this.burstPoints.geometry.attributes.size.needsUpdate = true;
-        this.burstPoints.geometry.setDrawRange(0, this.burstCount);
-    }
-
-    updateBursts() {
-        // Slowly age bursts by fading them (move them upward and shrink)
-        const newCount = Math.max(0, this.burstCount - 8);
-        if (newCount < this.burstCount) {
-            for (let i = newCount; i < this.burstCount; i++) {
-                this.burstPos[i*3] = 0;
-                this.burstPos[i*3+1] = -5;
-                this.burstPos[i*3+2] = 0;
-                this.burstSiz[i] = 0;
-            }
-            this.burstCount = newCount;
-            this.burstPoints.geometry.attributes.position.needsUpdate = true;
-            this.burstPoints.geometry.attributes.size.needsUpdate = true;
-            this.burstPoints.geometry.setDrawRange(0, this.burstCount);
+        const n=Math.min(this.bursts.length, this.MAX_BURSTS);
+        for (let i=0;i<n;i++) {
+            const b=this.bursts[i];
+            const lr=Math.max(0,b.life/b.maxLife);
+            this.bP[i*3]=b.x; this.bP[i*3+1]=b.y; this.bP[i*3+2]=b.z;
+            const fade=lr*1.2;
+            this.bC[i*3]=b.r*fade; this.bC[i*3+1]=b.g*fade; this.bC[i*3+2]=b.b*fade;
+            this.bS[i]=Math.max(0.005,b.size*lr);
         }
-        // Move remaining bursts upward
-        for (let i = 0; i < this.burstCount; i++) {
-            this.burstPos[i*3+1] += 0.01;
-            this.burstSiz[i] *= 0.995;
-        }
+        this.burstMesh.geometry.attributes.position.needsUpdate=true;
+        this.burstMesh.geometry.attributes.color.needsUpdate=true;
+        this.burstMesh.geometry.attributes.size.needsUpdate=true;
+        this.burstMesh.geometry.setDrawRange(0, n);
     }
 
     setNoteActive(note, active) {
         if (active) this.activeNotes.add(note);
-        else this.activeNotes.delete(note);
+        else { this.activeNotes.delete(note); this.branches.noteOff(note); }
     }
 
     update(audioData, dt) {
-        const freq = audioData.freq;
-        const time = audioData.time;
+        const freq=audioData.freq;
+        let avg=0, low=0, high=0;
+        for (let i=0;i<freq.length;i++) avg+=freq[i]/255; avg/=freq.length;
+        for (let i=0;i<8;i++) low+=freq[i]/255; low/=8;
+        for (let i=30;i<60;i++) high+=freq[i]/255; high/=30;
 
-        // Average energy
-        let avgEnergy = 0;
-        for (let i = 0; i < freq.length; i++) avgEnergy += freq[i] / 255;
-        avgEnergy /= freq.length;
+        this.audioHistory.push(avg);
+        if (this.audioHistory.length>30) this.audioHistory.shift();
+        const isBeat = avg > (this.audioHistory.slice(-10).reduce((a,b)=>a+b,0)/10)*1.3 && avg>0.12;
 
-        // Low freq energy
-        let lowEnergy = 0;
-        for (let i = 0; i < 8; i++) lowEnergy += freq[i] / 255;
-        lowEnergy /= 8;
+        // Stars
+        this.stars.rotation.y += dt*0.015*(0.5+avg);
+        this.stars.material.size = 0.25+avg*0.2;
 
-        // High freq energy
-        let highEnergy = 0;
-        for (let i = 30; i < 60; i++) highEnergy += freq[i] / 255;
-        highEnergy /= 30;
-
-        this.audioHistory.push(avgEnergy);
-        if (this.audioHistory.length > 30) this.audioHistory.shift();
-
-        // Beat detection
-        this.beatTime += dt;
-        const recentAvg = this.audioHistory.slice(-10).reduce((a,b) => a+b, 0) / 10;
-        const beatThreshold = recentAvg * 1.3;
-        const isBeat = avgEnergy > beatThreshold && avgEnergy > 0.15;
-
-        // ─── Stars ───
-        this.stars.rotation.y += dt * 0.02 * (0.5 + avgEnergy);
-        this.stars.material.size = 0.12 + avgEnergy * 0.15;
-
-        // ─── Nebula particles ───
-        const nbPos = this.nebulaParticles.geometry.attributes.position.array;
-        for (let i = 0; i < nbPos.length / 3; i++) {
-            nbPos[i*3] += Math.sin(i * 0.1 + Date.now() * 0.0003) * 0.0003 * (1 + avgEnergy);
-            nbPos[i*3+1] += Math.cos(i * 0.13 + Date.now() * 0.0004) * 0.0003 * (1 + avgEnergy * 0.5);
-            nbPos[i*3+2] += Math.sin(i * 0.17 + Date.now() * 0.00035) * 0.0003 * (1 + avgEnergy);
+        // Nebula
+        const nb=this.nebula.geometry.attributes.position.array;
+        for (let i=0;i<nb.length/3;i++) {
+            nb[i*3]+=Math.sin(i*0.1+Date.now()*0.0003)*0.0003*(1+avg);
+            nb[i*3+1]+=Math.cos(i*0.13+Date.now()*0.0004)*0.0003*(1+avg*0.5);
+            nb[i*3+2]+=Math.sin(i*0.17+Date.now()*0.00035)*0.0003*(1+avg);
         }
-        this.nebulaParticles.geometry.attributes.position.needsUpdate = true;
-        this.nebulaParticles.material.size = 0.08 + lowEnergy * 0.12;
-        this.nebulaParticles.material.opacity = 0.4 + avgEnergy * 0.3;
+        this.nebula.geometry.attributes.position.needsUpdate=true;
+        this.nebula.material.size = 0.12+low*0.15;
+        this.nebula.material.opacity = 0.35+avg*0.3;
 
-        // ─── Torus Knot ───
-        this.torusKnot.rotation.x += dt * 0.3 * (0.5 + highEnergy * 0.5);
-        this.torusKnot.rotation.y += dt * 0.5 * (0.5 + avgEnergy);
-        this.torusKnot.rotation.z += dt * 0.1 * (0.5 + lowEnergy);
+        // ─── ENERGY CORE ───
+        this.core.rotation.x += dt*0.15*(0.5+high*0.5);
+        this.core.rotation.y += dt*0.3*(0.5+avg);
+        this.core.rotation.z += dt*0.1*(0.5+low);
 
-        // Color based on active notes
-        let r = 0, g = 0, b = 0, count = 0;
-        this.activeNotes.forEach(note => {
-            const baseName = note.replace(/[0-9]+/g, '');
-            const c = NOTE_COLORS[baseName];
-            if (c) { r += c.r; g += c.g; b += c.b; count++; }
+        // Color from active notes
+        let r=0,g=0,b=0,count=0;
+        this.activeNotes.forEach(note=>{
+            const c=NOTE_COLORS[note.replace(/[0-9]+/g,'')];
+            if (c) {r+=c.r;g+=c.g;b+=c.b;count++;}
         });
-        if (count > 0) {
-            r /= count; g /= count; b /= count;
-            this.torusKnot.material.color.setRGB(r, g, b);
-            this.torusKnot.material.emissive.setRGB(r * 0.4, g * 0.4, b * 0.4);
-        } else {
-            // Drift with audio
-            const hue = (Date.now() * 0.00005) % 1;
-            this.torusKnot.material.color.setHSL(hue, 0.6, 0.3 + avgEnergy * 0.2);
-            this.torusKnot.material.emissive.setHSL(hue, 0.8, 0.2 + avgEnergy * 0.2);
-        }
+        if (count>0) { r/=count;g/=count;b/=count; }
+        else { const hue=(Date.now()*0.00004)%1; const c=new THREE.Color().setHSL(hue,0.6,0.5); r=c.r;g=c.g;b=c.b; }
 
-        // Scale pulse on beat
-        const targetScale = 1 + (isBeat ? 0.08 : 0) + lowEnergy * 0.1;
-        const currentScale = this.torusKnot.scale.x;
-        const newScale = currentScale + (targetScale - currentScale) * 0.1;
-        this.torusKnot.scale.set(newScale, newScale, newScale);
+        this.coreWire1.material.color.setRGB(r,g,b);
+        this.coreWire1.material.opacity = 0.12+avg*0.15;
+        this.coreWire2.material.color.setRGB(r*0.7+0.3,g*0.7+0.3,b*0.7+0.3);
+        this.coreWire2.material.opacity = 0.08+avg*0.1;
+        this.coreWire3.material.color.setRGB(1-b*0.5,1-g*0.3,1-r*0.5);
+        this.coreWire3.material.opacity = 0.12+low*0.15;
 
-        // Glow sphere
-        this.glowSphere.material.color.set(this.torusKnot.material.color);
-        this.glowSphere.material.opacity = 0.15 + avgEnergy * 0.3;
-        this.glowSphere.scale.setScalar(1 + lowEnergy * 0.3);
+        const ts = 1+(isBeat?0.06:0)+low*0.08;
+        const cs = this.core.scale.x;
+        const ns = cs+(ts-cs)*0.1;
+        this.core.scale.set(ns,ns,ns);
 
-        // ─── Orbital rings ───
-        this.orbitRings.forEach((ring, i) => {
-            ring.rotation.z += dt * (0.1 + i * 0.05) * (0.5 + avgEnergy);
-            ring.material.opacity = 0.08 + i * 0.04 + avgEnergy * 0.1;
-            const s = 1 + lowEnergy * 0.1 * (i + 1);
-            ring.scale.set(s, s, s);
+        // Core glow
+        this.coreGlow.material.color.setRGB(r,g,b);
+        this.coreGlow.material.opacity = 0.3+avg*0.4;
+        this.coreGlow.scale.setScalar(1+low*0.3);
+
+        // Rings
+        this.coreRing.material.color.setRGB(r,g,b);
+        this.coreRing.material.opacity = 0.08+avg*0.1;
+        this.coreRing.rotation.z += dt*0.2*(0.5+avg);
+        this.coreRing2.material.color.setRGB(r*0.5+0.5,g*0.5+0.5,b*0.5+0.5);
+        this.coreRing2.material.opacity = 0.05+low*0.06;
+        this.coreRing2.rotation.x += dt*0.15*(0.5+avg);
+        this.coreRing2.rotation.z += dt*0.1*(0.5+high);
+
+        // Core vertex particles
+        this.coreParts.material.opacity = 0.5+avg*0.3;
+
+        // Orbiting lights
+        this.orbitLights.forEach((ol,i)=>{
+            ol.angle+=dt*ol.speed*(0.5+avg*0.5);
+            ol.light.position.set(Math.cos(ol.angle)*4, 0.3+Math.sin(ol.angle*1.3)*1.2, Math.sin(ol.angle)*4);
+            ol.light.intensity = 0.8+low*1.5+(isBeat?0.8:0);
+            if (count>0) ol.light.color.setRGB(ol.color.r*(0.4+r*0.6), ol.color.g*(0.4+g*0.6), ol.color.b*(0.4+b*0.6));
         });
 
-        // ─── Orbiting lights ───
-        this.orbitLights.forEach((ol, i) => {
-            ol.angle += dt * ol.speed * (0.5 + avgEnergy * 0.5);
-            const x = Math.cos(ol.angle) * 5;
-            const z = Math.sin(ol.angle) * 5;
-            ol.light.position.set(x, 0.5 + Math.sin(ol.angle * 1.3) * 1.5, z);
-            ol.light.intensity = 1 + lowEnergy * 1.5 + (isBeat ? 1 : 0);
-            if (count > 0) {
-                ol.light.color.setRGB(
-                    ol.color.r * (0.5 + r * 0.5),
-                    ol.color.g * (0.5 + g * 0.5),
-                    ol.color.b * (0.5 + b * 0.5)
-                );
-            }
-        });
-
-        // ─── Wave floor ───
-        const fPos = this.floor.geometry.attributes.position.array;
-        for (let i = 0; i < fPos.length / 3; i++) {
-            const x = fPos[i*3];
-            const z = fPos[i*3+2];
-            const wave1 = Math.sin(x * 0.8 + Date.now() * 0.0008) * 0.05 * (0.3 + lowEnergy);
-            const wave2 = Math.sin(z * 0.6 + Date.now() * 0.001) * 0.05 * (0.3 + avgEnergy);
-            const wave3 = Math.sin((x + z) * 0.5 + Date.now() * 0.0006) * 0.03 * (0.3 + highEnergy);
-            fPos[i*3+1] = wave1 + wave2 + wave3;
+        // Wave floor
+        const fp=this.floor.geometry.attributes.position.array;
+        for (let i=0;i<fp.length/3;i++) {
+            const x=fp[i*3], z=fp[i*3+2];
+            fp[i*3+1]=Math.sin(x*0.6+Date.now()*0.0007)*0.04*(0.3+low)
+                     +Math.sin(z*0.5+Date.now()*0.0009)*0.04*(0.3+avg)
+                     +Math.sin((x+z)*0.4+Date.now()*0.0005)*0.03*(0.3+high);
         }
-        this.floor.geometry.attributes.position.needsUpdate = true;
-        this.floor.material.emissiveIntensity = 0.2 + lowEnergy * 0.4;
-        this.floor.material.opacity = 0.3 + avgEnergy * 0.3;
+        this.floor.geometry.attributes.position.needsUpdate=true;
+        this.floor.material.emissiveIntensity=0.15+low*0.3;
+        this.floor.material.opacity=0.25+avg*0.25;
 
-        // ─── Burst particles ───
-        this.updateBursts();
+        // Bursts
+        this.updateBursts(dt);
+        // Branches
+        this.branches.update(dt);
 
-        // ─── Camera bob ───
-        if (isBeat) {
-            this.camera.position.y += 0.02;
-        }
+        // Bloom
+        this.bloom.strength = 0.25+avg*0.4;
 
-        // ─── Bloom ───
-        this.bloom.strength = 0.3 + avgEnergy * 0.5;
-
-        // ─── Controls ───
+        if (isBeat) this.camera.position.y += 0.015;
         this.controls.update();
-
-        // ─── Render ───
         this.composer.render();
     }
 
     onResize() {
-        const w = window.innerWidth;
-        const h = window.innerHeight;
-        this.camera.aspect = w/h;
-        this.camera.updateProjectionMatrix();
-        this.renderer.setSize(w, h);
-        this.composer.setSize(w, h);
-    }
-
-    dispose() {
-        this.renderer.dispose();
-        this.container.removeChild(this.renderer.domElement);
+        const w=innerWidth, h=innerHeight;
+        this.camera.aspect=w/h; this.camera.updateProjectionMatrix();
+        this.renderer.setSize(w,h); this.composer.setSize(w,h);
     }
 }
 
 // ─── KEYBOARD UI ────────────────────────────────────────────────
-function buildKeyboard(container, synth, visual) {
-    const NOTE_LABELS = { 'C':'Do','D':'Re','E':'Mi','F':'Fa','G':'Sol','A':'La','B':'Si' };
-    const KEY_MAP = {
-        'C3':'Z','C#3':'S','D3':'X','D#3':'D','E3':'C',
-        'F3':'V','F#3':'G','G3':'B','G#3':'H','A3':'N','A#3':'J','B3':'M',
-        'C4':'Q','C#4':'2','D4':'W','D#4':'3','E4':'E',
-        'F4':'R','F#4':'5','G4':'T','G#4':'6','A4':'Y','A#4':'7','B4':'U',
-        'C5':'I'
-    };
-
-    const whiteRegex = /^[A-G][0-9]$/;
-
-    const allWhite = ALL_NOTES.filter(n => whiteRegex.test(n));
-
+const NOTE_LABELS = {'C':'Do','D':'Re','E':'Mi','F':'Fa','G':'Sol','A':'La','B':'Si'};
+function buildKeyboard(synth, visual) {
     const kb = document.getElementById('keyboard');
+    const whiteN = ALL_NOTES.filter(n=>/^[A-G][0-9]$/.test(n));
 
-    function createKey(note, isBlack, blackLeft) {
-        const el = document.createElement('div');
-        el.className = isBlack ? 'bk' : 'wk';
-        el.dataset.note = note;
-
-        const glow = document.createElement('div');
-        glow.className = 'key-glow';
-        el.appendChild(glow);
-
+    function createKey(note, isBlack) {
+        const el=document.createElement('div');
+        el.className=isBlack?'bk':'wk'; el.dataset.note=note;
+        const glow=document.createElement('div'); glow.className='key-glow'; el.appendChild(glow);
+        const base=note.replace(/[0-9]+/g,'');
         if (!isBlack) {
-            const nl = document.createElement('div');
-            nl.className = 'note-label';
-            const base = note.replace(/[0-9]+/g, '');
-            nl.textContent = NOTE_LABELS[base] || base;
-            el.appendChild(nl);
+            const nl=document.createElement('div'); nl.className='note-label';
+            nl.textContent=NOTE_LABELS[base]||''; el.appendChild(nl);
         }
-
-        const kl = document.createElement('div');
-        kl.className = 'key-label';
-        kl.textContent = KEY_MAP[note] || '';
-        el.appendChild(kl);
-
-        if (isBlack && blackLeft !== undefined) {
-            const whiteIdx = allWhite.indexOf(note.replace(/#/,'') + note.slice(-1));
-            const prevWhiteIdx = allWhite.indexOf(note.replace(/#/,'').replace(/[A-G]/, m => {
-                const notes = ['C','D','E','F','G','A','B'];
-                const idx = notes.indexOf(m);
-                return idx > 0 ? notes[idx-1] : m;
-            }) + note.slice(-1));
-
-            // Position: between the white key before and the white key of this note
-            const posInOctave = NOTE_NAMES.indexOf(note.replace(/[0-9]/g,''));
-            // Black keys positions: C# between C-D (pos 1), D# between D-E (pos 3), F# between F-G (pos 6), G# between G-A (pos 8), A# between A-B (pos 10)
-            const blackPosMap = { 1: 1, 3: 2, 6: 3, 8: 4, 10: 5 };
-            const bp = blackPosMap[posInOctave] || 3;
-            const wkWidth = 38; // 36 + 2 margin
-            const left = (bp - 1) * wkWidth + wkWidth - 11;
-            el.style.left = left + 'px';
+        const kl=document.createElement('div'); kl.className='key-label';
+        kl.textContent=BASE_TO_KEY[base]||''; el.appendChild(kl);
+        if (isBlack) {
+            const pos=NOTE_NAMES.indexOf(base);
+            const wi={1:0,3:1,6:3,8:4,10:5}[pos];
+            if (wi!==undefined) {
+                const oct = parseInt(note.replace(/[A-Z#]+/g,''));
+                const octOffset = (oct - 3) * 266; // 7 white keys * 38px per octave
+                el.style.left=((wi+1)*38-11 + octOffset)+'px';
+            }
         }
-
         return el;
     }
 
-    // Build white keys
-    const whiteKeyEls = [];
-    allWhite.forEach(note => {
-        const el = createKey(note, false);
-        kb.appendChild(el);
-        whiteKeyEls.push(el);
-    });
+    whiteN.forEach(n=>kb.appendChild(createKey(n,false)));
+    for (let o=3;o<=4;o++) BLACK_BASES.forEach(b=>kb.appendChild(createKey(b+o,true)));
 
-    // Build black keys
-    const blackNoteList = [];
-    for (let oct = 3; oct <= 4; oct++) {
-        ['C#','D#','F#','G#','A#'].forEach(b => blackNoteList.push(b+oct));
+    const allKeys=kb.querySelectorAll('.wk,.bk');
+    let mouseDown=false;
+    function press(el) {
+        if (!el||el.classList.contains('pressed')) return;
+        const n=el.dataset.note; el.classList.add('pressed');
+        const c=NOTE_COLORS[n.replace(/[0-9]+/g,'')];
+        const g=el.querySelector('.key-glow');
+        if (g&&c) g.style.background=`radial-gradient(ellipse at center, rgba(${c.r*255|0},${c.g*255|0},${c.b*255|0},0.4) 0%, transparent 70%)`;
+        synth.noteOn(n); visual.setNoteActive(n,true); visual.triggerNoteBurst(n,0.7);
+        document.getElementById('active-count').textContent=visual.activeNotes.size;
     }
-    blackNoteList.forEach(note => {
-        const el = createKey(note, true);
-        kb.appendChild(el);
-    });
-
-    // Mouse events
-    const allKeys = kb.querySelectorAll('.wk, .bk');
-    let mouseDown = false;
-
-    function pressKey(el) {
-        if (!el || el.classList.contains('pressed')) return;
-        const note = el.dataset.note;
-        el.classList.add('pressed');
-        const baseName = note.replace(/[0-9]+/g, '');
-        const color = NOTE_COLORS[baseName];
-        const glow = el.querySelector('.key-glow');
-        if (glow && color) {
-            glow.style.background = `radial-gradient(ellipse at center, rgba(${color.r*255|0},${color.g*255|0},${color.b*255|0},0.4) 0%, transparent 70%)`;
-        }
-        synth.noteOn(note);
-        visual.setNoteActive(note, true);
-        visual.triggerNoteBurst(note, 0.7);
-        updateActiveCount();
-    }
-
-    function releaseKey(el) {
+    function release(el) {
         if (!el) return;
-        const note = el.dataset.note;
-        el.classList.remove('pressed');
-        synth.noteOff(note);
-        visual.setNoteActive(note, false);
-        updateActiveCount();
+        const n=el.dataset.note; el.classList.remove('pressed');
+        synth.noteOff(n); visual.setNoteActive(n,false);
+        document.getElementById('active-count').textContent=visual.activeNotes.size;
+    }
+    allKeys.forEach(el=>{
+        el.addEventListener('mousedown',e=>{e.preventDefault();mouseDown=true;synth.resume();press(el);});
+        el.addEventListener('mouseenter',()=>{if(mouseDown&&!el.classList.contains('pressed'))press(el);});
+        el.addEventListener('mouseleave',()=>{if(el.classList.contains('pressed'))release(el);});
+    });
+    document.addEventListener('mouseup',()=>{mouseDown=false;});
+
+    kb.addEventListener('touchstart',e=>{e.preventDefault();synth.resume();const t=e.changedTouches[0];const el=document.elementFromPoint(t.clientX,t.clientY);if(el&&(el.classList.contains('wk')||el.classList.contains('bk')))press(el);},{passive:false});
+    kb.addEventListener('touchmove',e=>{e.preventDefault();const t=e.changedTouches[0];const el=document.elementFromPoint(t.clientX,t.clientY);allKeys.forEach(k=>{if(k.classList.contains('pressed')&&k!==el)release(k);});if(el&&(el.classList.contains('wk')||el.classList.contains('bk'))&&!el.classList.contains('pressed'))press(el);},{passive:false});
+    kb.addEventListener('touchend',e=>{e.preventDefault();allKeys.forEach(k=>{if(k.classList.contains('pressed'))release(k);});},{passive:false});
+
+    function shiftOctave(dir) {
+        const n=CURRENT_OCTAVE+dir;
+        if (n<1||n>7) return;
+        CURRENT_OCTAVE=n; KEYBOARD_MAP=buildKeyMap(n);
+        document.getElementById('oct-display').textContent=n;
     }
 
-    allKeys.forEach(el => {
-        el.addEventListener('mousedown', e => {
-            e.preventDefault();
-            mouseDown = true;
-            synth.resume();
-            pressKey(el);
-        });
-        el.addEventListener('mouseenter', () => {
-            if (mouseDown && !el.classList.contains('pressed')) {
-                pressKey(el);
-            }
-        });
-        el.addEventListener('mouseleave', () => {
-            if (el.classList.contains('pressed')) {
-                releaseKey(el);
-            }
-        });
+    document.addEventListener('keydown',e=>{
+        if (e.repeat||e.target.tagName==='INPUT') return;
+        if (e.key===',') { shiftOctave(-1); return; }
+        if (e.key==='.') { shiftOctave(1); return; }
+        const note=KEYBOARD_MAP[e.key.toLowerCase()];
+        if (note) { e.preventDefault(); synth.resume(); const el=document.querySelector(`[data-note="${note}"]`); if (el&&!el.classList.contains('pressed')) press(el); }
     });
-    document.addEventListener('mouseup', () => {
-        mouseDown = false;
+    document.addEventListener('keyup',e=>{
+        if (e.key===','||e.key==='.') return;
+        const note=KEYBOARD_MAP[e.key.toLowerCase()];
+        if (note) { const el=document.querySelector(`[data-note="${note}"]`); if (el) release(el); }
     });
-
-    // Touch
-    kb.addEventListener('touchstart', e => {
-        e.preventDefault();
-        synth.resume();
-        const touch = e.changedTouches[0];
-        const el = document.elementFromPoint(touch.clientX, touch.clientY);
-        if (el && (el.classList.contains('wk') || el.classList.contains('bk'))) {
-            pressKey(el);
-        }
-    }, { passive: false });
-    kb.addEventListener('touchmove', e => {
-        e.preventDefault();
-        const touch = e.changedTouches[0];
-        const el = document.elementFromPoint(touch.clientX, touch.clientY);
-        // Release all
-        allKeys.forEach(k => {
-            if (k.classList.contains('pressed') && k !== el) releaseKey(k);
-        });
-        if (el && (el.classList.contains('wk') || el.classList.contains('bk'))) {
-            if (!el.classList.contains('pressed')) pressKey(el);
-        }
-    }, { passive: false });
-    kb.addEventListener('touchend', e => {
-        e.preventDefault();
-        allKeys.forEach(k => {
-            if (k.classList.contains('pressed')) releaseKey(k);
-        });
-    }, { passive: false });
-
-    // Computer keyboard
-    document.addEventListener('keydown', e => {
-        if (e.repeat) return;
-        if (e.target.tagName === 'INPUT') return;
-        const note = KEYBOARD_MAP[e.key.toLowerCase()];
-        if (note) {
-            e.preventDefault();
-            synth.resume();
-            const el = document.querySelector(`[data-note="${note}"]`);
-            if (el && !el.classList.contains('pressed')) {
-                pressKey(el);
-            }
-        }
-    });
-    document.addEventListener('keyup', e => {
-        const note = KEYBOARD_MAP[e.key.toLowerCase()];
-        if (note) {
-            const el = document.querySelector(`[data-note="${note}"]`);
-            if (el) releaseKey(el);
-        }
-    });
-
-    function updateActiveCount() {
-        document.getElementById('active-count').textContent = visual.activeNotes.size;
-    }
+    document.getElementById('oct-down').addEventListener('click',()=>shiftOctave(-1));
+    document.getElementById('oct-up').addEventListener('click',()=>shiftOctave(1));
 }
 
 // ─── INIT ───────────────────────────────────────────────────────
-const synth = new SynthEngine();
-const container = document.getElementById('three-container');
-const visual = new VisualScene(container);
+const synth=new SynthEngine();
+const visual=new VisualScene(document.getElementById('three-container'));
+buildKeyboard(synth, visual);
 
-buildKeyboard(document.getElementById('keyboard'), synth, visual);
-
-// ─── PRESETS ────────────────────────────────────────────────────
-document.querySelectorAll('.preset-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        synth.setPreset(btn.dataset.preset);
-        synth.allNotesOff();
+document.querySelectorAll('.preset-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active'); synth.setPreset(btn.dataset.preset); synth.allNotesOff();
     });
 });
+document.getElementById('volume-slider').addEventListener('input',e=>synth.setVolume(e.target.value/100));
 
-// ─── VOLUME ─────────────────────────────────────────────────────
-document.getElementById('volume-slider').addEventListener('input', e => {
-    const val = e.target.value / 100;
-    synth.setVolume(val);
+let visMode='default';
+document.getElementById('btn-vision').addEventListener('click',()=>{
+    const modes=['default','wireframe','particles'];
+    visMode=modes[(modes.indexOf(visMode)+1)%modes.length];
+    document.getElementById('btn-vision').textContent='Visuales: '+visMode;
+    if (visMode==='wireframe') { visual.nebula.material.size=0.05; visual.coreWire1.material.opacity=0.3; visual.coreWire2.material.opacity=0.2; visual.coreWire3.material.opacity=0.3; }
+    else if (visMode==='particles') { visual.nebula.material.size=0.3; visual.coreWire1.material.opacity=0.05; visual.coreWire2.material.opacity=0.03; visual.coreParts.material.size=0.15; }
+    else { visual.nebula.material.size=0.12; visual.coreWire1.material.opacity=0.12; visual.coreWire2.material.opacity=0.08; visual.coreWire3.material.opacity=0.15; visual.coreParts.material.size=0.06; }
+});
+document.getElementById('btn-fullscreen').addEventListener('click',()=>{
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
 });
 
-// ─── VISION MODE ────────────────────────────────────────────────
-let visionMode = 'default';
-document.getElementById('btn-vision').addEventListener('click', () => {
-    const modes = ['default', 'wireframe', 'particles'];
-    const idx = (modes.indexOf(visionMode) + 1) % modes.length;
-    visionMode = modes[idx];
-    document.getElementById('btn-vision').textContent = 'Visuales: ' + visionMode;
-    if (visionMode === 'wireframe') {
-        visual.torusKnot.material.wireframe = true;
-        visual.nebulaParticles.material.size = 0.03;
-    } else if (visionMode === 'particles') {
-        visual.torusKnot.material.wireframe = false;
-        visual.torusKnot.material.opacity = 0.2;
-        visual.nebulaParticles.material.size = 0.15;
-    } else {
-        visual.torusKnot.material.wireframe = false;
-        visual.torusKnot.material.opacity = 0.9;
-        visual.nebulaParticles.material.size = 0.08;
-    }
-});
-
-// ─── FULLSCREEN ─────────────────────────────────────────────────
-document.getElementById('btn-fullscreen').addEventListener('click', () => {
-    if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen();
-    } else {
-        document.exitFullscreen();
-    }
-});
-
-// ─── ANIMATION LOOP ─────────────────────────────────────────────
-let lastTime = performance.now();
-
+let lastTime=performance.now();
 function animate(time) {
-    const dt = Math.min((time - lastTime) / 1000, 0.05);
-    lastTime = time;
-
-    const audioData = synth.getAnalyserData();
-    visual.update(audioData, dt);
-
-    // BPM indicator
-    const avgEnergy = audioData.freq.reduce((a,b) => a+b, 0) / audioData.freq.length / 255;
-    const dot = document.getElementById('note-indicator');
-    if (avgEnergy > 0.12) {
-        dot.classList.add('active');
-    } else {
-        dot.classList.remove('active');
-    }
-
+    const dt=Math.min((time-lastTime)/1000,0.05); lastTime=time;
+    const data=synth.getAnalyserData();
+    visual.update(data,dt);
+    const avg=data.freq.reduce((a,b)=>a+b,0)/data.freq.length/255;
+    const dot=document.getElementById('note-indicator');
+    if (avg>0.1) dot.classList.add('active'); else dot.classList.remove('active');
     requestAnimationFrame(animate);
 }
-
-// ─── START ──────────────────────────────────────────────────────
-// Initialize audio context on first user interaction
-function firstInteraction() {
-    synth.init();
-    document.removeEventListener('click', firstInteraction);
-    document.removeEventListener('keydown', firstInteraction);
-    document.removeEventListener('touchstart', firstInteraction);
-    // Hide loading
-    document.getElementById('loading').classList.add('hidden');
-}
-
-document.addEventListener('click', firstInteraction);
-document.addEventListener('keydown', firstInteraction);
-document.addEventListener('touchstart', firstInteraction);
-
-// Start animation loop even before audio
 requestAnimationFrame(animate);
 
-console.log('✦ Nebulosa Sonora — Sintetizador Sinestésico 3D');
-console.log('  Teclado: Z-M (octava baja) + Q-] (octava alta)');
-console.log('  Negras: S, D, G, H, J | 2, 3, 5, 6, 7');
+function firstInteraction() { synth.init(); document.getElementById('loading').classList.add('hidden'); }
+document.addEventListener('click',firstInteraction);
+document.addEventListener('keydown',firstInteraction);
+document.addEventListener('touchstart',firstInteraction);
 
+console.log('✦ Nebulosa Sonora v3 — Energy Core + Piano real + Fadeout');
+console.log('  Blancas: A S D F G H J  |  Negras: W E T Y U');
+console.log('  , y . para cambiar octava');
 </script>
 </body>
 </html>

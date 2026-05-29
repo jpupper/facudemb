@@ -44,176 +44,262 @@
         return audioCtx;
     }
 
-    // Preset sound engines
+    // Preset sound engines — improved across the board
     const engines = {
+        // Acoustic Piano — warmer, richer harmonics
         piano: function(ac, freq, duration) {
             const now = ac.currentTime;
-            const gain = ac.createGain();
-            gain.connect(ac.destination);
+            const master = ac.createGain();
+            master.connect(ac.destination);
+            master.gain.setValueAtTime(0.7, now);
+            master.gain.exponentialRampToValueAtTime(0.001, now + duration);
 
-            // Fundamental + harmonics for piano-like sound
-            const osc1 = ac.createOscillator();
-            osc1.type = 'triangle';
-            osc1.frequency.setValueAtTime(freq, now);
+            // Three partials for realistic piano tone
+            const partials = [
+                { type: 'triangle', mult: 1, gain: 0.5, decay: 1.0 },
+                { type: 'sine', mult: 2, gain: 0.2, decay: 0.6 },
+                { type: 'sine', mult: 3, gain: 0.08, decay: 0.3 },
+            ];
 
-            const osc2 = ac.createOscillator();
-            osc2.type = 'sine';
-            osc2.frequency.setValueAtTime(freq * 2, now);
-            osc2.frequency.linearRampToValueAtTime(freq * 2, now + 0.05);
-
-            const gain1 = ac.createGain();
-            const gain2 = ac.createGain();
-
-            osc1.connect(gain1);
-            osc2.connect(gain2);
-            gain1.connect(gain);
-            gain2.connect(gain);
-
-            gain1.gain.setValueAtTime(0.5, now);
-            gain1.gain.exponentialRampToValueAtTime(0.001, now + duration);
-
-            gain2.gain.setValueAtTime(0.3, now);
-            gain2.gain.exponentialRampToValueAtTime(0.001, now + duration * 0.5);
-
-            osc1.start(now);
-            osc2.start(now);
-            osc1.stop(now + duration);
-            osc2.stop(now + duration);
-
-            // ADSR envelope
-            gain.gain.setValueAtTime(0, now);
-            gain.gain.linearRampToValueAtTime(0.6, now + 0.01);
-            gain.gain.exponentialRampToValueAtTime(0.3, now + 0.1);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
-        },
-
-        organ: function(ac, freq, duration) {
-            const now = ac.currentTime;
-            const gain = ac.createGain();
-            gain.connect(ac.destination);
-
-            for (let i = 1; i <= 5; i++) {
+            partials.forEach(function(p) {
                 const osc = ac.createOscillator();
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(freq * i, now);
+                osc.type = p.type;
+                osc.frequency.setValueAtTime(freq * p.mult, now);
                 const g = ac.createGain();
                 osc.connect(g);
-                g.connect(gain);
-                g.gain.setValueAtTime(0.2 / i, now);
-                g.gain.setValueAtTime(0.2 / i, now + duration - 0.02);
+                g.connect(master);
+                g.gain.setValueAtTime(p.gain, now);
+                g.gain.exponentialRampToValueAtTime(0.001, now + duration * p.decay);
+                osc.start(now);
+                osc.stop(now + duration);
+            });
+
+            // Velocity-like click for attack
+            const click = ac.createOscillator();
+            click.type = 'sine';
+            click.frequency.setValueAtTime(freq * 8, now);
+            click.frequency.exponentialRampToValueAtTime(freq * 2, now + 0.01);
+            const cg = ac.createGain();
+            click.connect(cg);
+            cg.connect(master);
+            cg.gain.setValueAtTime(0.15, now);
+            cg.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
+            click.start(now);
+            click.stop(now + 0.02);
+        },
+
+        // Electric Piano — Rhodes-like bell tone with chorus
+        epiano: function(ac, freq, duration) {
+            const now = ac.currentTime;
+            const master = ac.createGain();
+            master.connect(ac.destination);
+            master.gain.setValueAtTime(0.65, now);
+            master.gain.exponentialRampToValueAtTime(0.001, now + duration * 1.2);
+
+            // FM-like: carrier + modulator for bell tone
+            const carrier = ac.createOscillator();
+            carrier.type = 'sine';
+            carrier.frequency.setValueAtTime(freq, now);
+
+            const modulator = ac.createOscillator();
+            modulator.type = 'sine';
+            modulator.frequency.setValueAtTime(freq * 5, now);
+
+            const modGain = ac.createGain();
+            modGain.gain.setValueAtTime(freq * 0.5, now);
+            modGain.gain.exponentialRampToValueAtTime(0.1, now + 0.15);
+            modulator.connect(modGain);
+            modGain.connect(carrier.frequency);
+
+            // Subtle chorus (detuned second oscillator)
+            const chorus = ac.createOscillator();
+            chorus.type = 'sine';
+            chorus.frequency.setValueAtTime(freq * 1.003, now);
+
+            const cg = ac.createGain();
+            carrier.connect(master);
+            chorus.connect(cg);
+            cg.connect(master);
+
+            cg.gain.setValueAtTime(0.2, now);
+            cg.gain.exponentialRampToValueAtTime(0.001, now + duration * 0.8);
+
+            // Soft attack envelope on master
+            master.gain.setValueAtTime(0, now);
+            master.gain.linearRampToValueAtTime(0.65, now + 0.005);
+            master.gain.setValueAtTime(0.65, now + 0.02);
+            master.gain.exponentialRampToValueAtTime(0.001, now + duration * 1.2);
+
+            carrier.start(now);
+            chorus.start(now);
+            modulator.start(now);
+            carrier.stop(now + duration);
+            chorus.stop(now + duration);
+            modulator.stop(now + duration);
+        },
+
+        // Organ — Hammond-like with tonewheel simulation
+        organ: function(ac, freq, duration) {
+            const now = ac.currentTime;
+            const master = ac.createGain();
+            master.connect(ac.destination);
+            master.gain.setValueAtTime(0, now);
+            master.gain.linearRampToValueAtTime(0.5, now + 0.02);
+            master.gain.setValueAtTime(0.5, now + duration - 0.05);
+            master.gain.linearRampToValueAtTime(0, now + duration);
+
+            // Tonewheel drawbar simulation
+            const bars = [0.5, 0.3, 0.2, 0.15, 0.1, 0.06, 0.04];
+            for (let i = 0; i < bars.length; i++) {
+                const osc = ac.createOscillator();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(freq * (i + 1), now);
+                const g = ac.createGain();
+                osc.connect(g);
+                g.connect(master);
+                g.gain.setValueAtTime(bars[i], now);
+                g.gain.setValueAtTime(bars[i], now + duration - 0.02);
                 osc.start(now);
                 osc.stop(now + duration);
             }
 
-            gain.gain.setValueAtTime(0, now);
-            gain.gain.linearRampToValueAtTime(0.4, now + 0.05);
-            gain.gain.setValueAtTime(0.4, now + duration - 0.05);
-            gain.gain.linearRampToValueAtTime(0, now + duration);
+            // Leslie rotating speaker effect
+            const lfo = ac.createOscillator();
+            lfo.type = 'sine';
+            lfo.frequency.setValueAtTime(5.5, now);
+            const lfoGain = ac.createGain();
+            lfoGain.gain.setValueAtTime(15, now);
+            lfo.connect(lfoGain);
+            lfoGain.connect(master.gain);
+            lfo.start(now);
+            lfo.stop(now + duration);
         },
 
+        // Strings — richer ensemble
         strings: function(ac, freq, duration) {
             const now = ac.currentTime;
-            const gain = ac.createGain();
-            gain.connect(ac.destination);
+            const master = ac.createGain();
+            master.connect(ac.destination);
 
-            const osc1 = ac.createOscillator();
-            osc1.type = 'sine';
-            osc1.frequency.setValueAtTime(freq, now);
-            const osc2 = ac.createOscillator();
-            osc2.type = 'sine';
-            osc2.frequency.setValueAtTime(freq * 1.01, now);
+            // 4 detuned oscillators for lush ensemble
+            const detunes = [0, 0.5, -0.6, 1.2];
+            detunes.forEach(function(d, i) {
+                const osc = ac.createOscillator();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq * (1 + d / 100), now);
+                const g = ac.createGain();
+                osc.connect(g);
+                g.connect(master);
+                g.gain.setValueAtTime(0.25, now);
+                g.gain.setValueAtTime(0.25, now + duration - 0.3);
+                osc.start(now);
+                osc.stop(now + duration);
+            });
 
-            const g1 = ac.createGain();
-            const g2 = ac.createGain();
-            osc1.connect(g1);
-            osc2.connect(g2);
-            g1.connect(gain);
-            g2.connect(gain);
+            // Sub octave for richness
+            const sub = ac.createOscillator();
+            sub.type = 'triangle';
+            sub.frequency.setValueAtTime(freq * 0.5, now);
+            const sg = ac.createGain();
+            sub.connect(sg);
+            sg.connect(master);
+            sg.gain.setValueAtTime(0.15, now);
+            sub.start(now);
+            sub.stop(now + duration);
 
-            g1.gain.setValueAtTime(0.4, now);
-            g2.gain.setValueAtTime(0.4, now);
-
-            // Slow attack
-            gain.gain.setValueAtTime(0, now);
-            gain.gain.linearRampToValueAtTime(0.5, now + 0.2);
-            gain.gain.setValueAtTime(0.5, now + duration - 0.3);
-            gain.gain.linearRampToValueAtTime(0, now + duration);
-
-            osc1.start(now);
-            osc2.start(now);
-            osc1.stop(now + duration);
-            osc2.stop(now + duration);
+            // Slow attack, slow release
+            master.gain.setValueAtTime(0, now);
+            master.gain.linearRampToValueAtTime(0.55, now + 0.15);
+            master.gain.setValueAtTime(0.55, now + duration - 0.25);
+            master.gain.linearRampToValueAtTime(0, now + duration);
         },
 
+        // Synth Lead — aggressive with filter sweep
         synth: function(ac, freq, duration) {
             const now = ac.currentTime;
-            const gain = ac.createGain();
-            gain.connect(ac.destination);
+            const master = ac.createGain();
+            master.connect(ac.destination);
 
-            const osc = ac.createOscillator();
-            osc.type = 'square';
-            osc.frequency.setValueAtTime(freq, now);
-            osc.frequency.linearRampToValueAtTime(freq * 1.02, now + 0.05);
+            const osc1 = ac.createOscillator();
+            osc1.type = 'sawtooth';
+            osc1.frequency.setValueAtTime(freq, now);
+            osc1.frequency.linearRampToValueAtTime(freq * 1.005, now + 0.1);
+
+            const osc2 = ac.createOscillator();
+            osc2.type = 'square';
+            osc2.frequency.setValueAtTime(freq * 2.01, now);
 
             const filter = ac.createBiquadFilter();
             filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(800, now);
-            filter.frequency.exponentialRampToValueAtTime(200, now + duration);
-
-            osc.connect(filter);
-            filter.connect(gain);
-
-            gain.gain.setValueAtTime(0, now);
-            gain.gain.linearRampToValueAtTime(0.5, now + 0.02);
-            gain.gain.setValueAtTime(0.5, now + duration - 0.1);
-            gain.gain.linearRampToValueAtTime(0, now + duration);
-
-            osc.start(now);
-            osc.stop(now + duration);
-        },
-
-        pad: function(ac, freq, duration) {
-            const now = ac.currentTime;
-            const gain = ac.createGain();
-            gain.connect(ac.destination);
-
-            // Detuned sine waves for lush pad
-            const osc1 = ac.createOscillator();
-            osc1.type = 'sine';
-            osc1.frequency.setValueAtTime(freq, now);
-            const osc2 = ac.createOscillator();
-            osc2.type = 'sine';
-            osc2.frequency.setValueAtTime(freq * 1.005, now);
-            const osc3 = ac.createOscillator();
-            osc3.type = 'triangle';
-            osc3.frequency.setValueAtTime(freq * 0.5, now);
+            filter.frequency.setValueAtTime(1200, now);
+            filter.frequency.exponentialRampToValueAtTime(150, now + duration * 0.7);
+            filter.Q.setValueAtTime(8, now);
 
             const g1 = ac.createGain();
             const g2 = ac.createGain();
-            const g3 = ac.createGain();
             osc1.connect(g1);
             osc2.connect(g2);
-            osc3.connect(g3);
-            g1.connect(gain);
-            g2.connect(gain);
-            g3.connect(gain);
+            g1.connect(filter);
+            g2.connect(filter);
+            filter.connect(master);
 
-            g1.gain.setValueAtTime(0.3, now);
-            g2.gain.setValueAtTime(0.3, now);
-            g3.gain.setValueAtTime(0.15, now);
+            g1.gain.setValueAtTime(0.4, now);
+            g2.gain.setValueAtTime(0.15, now);
 
-            // Very slow attack, long release
-            gain.gain.setValueAtTime(0, now);
-            gain.gain.linearRampToValueAtTime(0.4, now + 0.4);
-            gain.gain.setValueAtTime(0.4, now + duration - 0.5);
-            gain.gain.linearRampToValueAtTime(0, now + duration);
+            // ADSR
+            master.gain.setValueAtTime(0, now);
+            master.gain.linearRampToValueAtTime(0.55, now + 0.01);
+            master.gain.setValueAtTime(0.5, now + duration - 0.15);
+            master.gain.linearRampToValueAtTime(0, now + duration);
 
             osc1.start(now);
             osc2.start(now);
-            osc3.start(now);
             osc1.stop(now + duration);
             osc2.stop(now + duration);
-            osc3.stop(now + duration);
+        },
+
+        // Pad — cinematic, evolving
+        pad: function(ac, freq, duration) {
+            const now = ac.currentTime;
+            const master = ac.createGain();
+            master.connect(ac.destination);
+
+            const layers = [
+                { type: 'sine', mult: 1, detune: 0, gain: 0.25 },
+                { type: 'sine', mult: 1, detune: 5, gain: 0.2 },
+                { type: 'triangle', mult: 0.5, detune: 0, gain: 0.15 },
+                { type: 'sine', mult: 2, detune: -2, gain: 0.08 },
+            ];
+
+            layers.forEach(function(l) {
+                const osc = ac.createOscillator();
+                osc.type = l.type;
+                osc.frequency.setValueAtTime(freq * l.mult * (1 + l.detune / 100), now);
+                const g = ac.createGain();
+                osc.connect(g);
+                g.connect(master);
+                g.gain.setValueAtTime(l.gain, now);
+                g.gain.setValueAtTime(l.gain, now + duration - 0.5);
+                osc.start(now);
+                osc.stop(now + duration);
+            });
+
+            // LFO for subtle movement
+            const lfo = ac.createOscillator();
+            lfo.type = 'sine';
+            lfo.frequency.setValueAtTime(0.3, now);
+            const lfoGain = ac.createGain();
+            lfoGain.gain.setValueAtTime(8, now);
+            lfo.connect(lfoGain);
+            lfoGain.connect(master.gain);
+            lfo.start(now);
+            lfo.stop(now + duration);
+
+            // Very slow attack, long release
+            master.gain.setValueAtTime(0, now);
+            master.gain.linearRampToValueAtTime(0.45, now + 0.5);
+            master.gain.setValueAtTime(0.45, now + duration - 0.6);
+            master.gain.linearRampToValueAtTime(0, now + duration);
         }
     };
 
