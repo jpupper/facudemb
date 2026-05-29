@@ -20,7 +20,7 @@ html {
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     color: var(--text-color);
     background: var(--dark-bg);
@@ -830,4 +830,341 @@ header {
 }
 .brightened{
     filter: brightness(2.6);
+}
+
+/* ========== Instagram Button ========== */
+.instagram-btn {
+    color: white;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    background: radial-gradient(circle at 30% 30%, #fdf497, #fd5949, #d6249f, #285AEB);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(225, 48, 108, 0.3);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.instagram-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 15px rgba(225, 48, 108, 0.5);
+}
+
+.instagram-btn i {
+    font-size: 1.5em;
+    color: white;
+}
+
+.instagram-btn span {
+    color: white;
+}
+
+/* ========== Rain Notes Canvas ========== */
+#rain-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ========== Piano FAB (Floating Action Button) ========== */
+#piano-fab {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.5);
+    animation: piano-blink 1.5s ease-in-out infinite;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+#piano-fab:hover {
+    transform: scale(1.15);
+    box-shadow: 0 6px 30px rgba(212, 175, 55, 0.7);
+    animation: none;
+}
+
+#piano-fab i {
+    position: absolute;
+    transition: opacity 0.5s ease;
+}
+
+#piano-fab .fa-music {
+    animation: icon-swap-1 1.5s ease-in-out infinite;
+}
+
+#piano-fab .fa-piano-keyboard {
+    animation: icon-swap-2 1.5s ease-in-out infinite;
+}
+
+@keyframes piano-blink {
+    0%, 100% { opacity: 1; box-shadow: 0 4px 20px rgba(212, 175, 55, 0.5); }
+    50% { opacity: 0.85; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.2); }
+}
+
+@keyframes icon-swap-1 {
+    0%, 40% { opacity: 1; }
+    50%, 90% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; }
+}
+
+@keyframes icon-swap-2 {
+    0%, 40% { opacity: 0; transform: scale(0.8); }
+    50%, 90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* ========== Piano Modal ========== */
+.piano-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.piano-modal-overlay.active {
+    display: flex;
+}
+
+.piano-modal-content {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 700px;
+    width: 90%;
+    border: 1px solid var(--accent-color);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    position: relative;
+}
+
+.piano-modal-content h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+.piano-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: var(--accent-color);
+    font-size: 2rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+    line-height: 1;
+}
+
+.piano-modal-close:hover {
+    transform: scale(1.2);
+    color: white;
+}
+
+/* Preset Buttons */
+.preset-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.preset-btn {
+    padding: 8px 18px;
+    border: 1px solid var(--accent-color);
+    background: transparent;
+    color: var(--accent-color);
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.preset-btn:hover {
+    background: rgba(212, 175, 55, 0.15);
+    transform: translateY(-2px);
+}
+
+.preset-btn.active {
+    background: var(--accent-color);
+    color: var(--primary-color);
+}
+
+/* Piano Keyboard */
+.piano-container {
+    padding: 20px 10px 10px;
+    background: #1a1a2e;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.piano-keyboard {
+    display: flex;
+    position: relative;
+    height: 200px;
+    justify-content: center;
+}
+
+.white-key {
+    width: 14.28%;
+    height: 100%;
+    background: linear-gradient(180deg, #f0f0f0 0%, #e0e0e0 100%);
+    border: 1px solid #ccc;
+    border-radius: 0 0 6px 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 12px;
+    font-size: 0.7rem;
+    color: #999;
+    transition: background 0.08s, transform 0.05s, box-shadow 0.05s;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+    z-index: 1;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.white-key::after {
+    content: attr(data-key);
+    position: absolute;
+    bottom: 4px;
+    font-size: 0.6rem;
+    opacity: 0.35;
+    color: #666;
+    pointer-events: none;
+}
+
+.white-key:active,
+.white-key.pressed {
+    background: linear-gradient(180deg, #ddd 0%, #c0c0c0 100%);
+    box-shadow: inset 0 3px 8px rgba(0,0,0,0.25), 0 4px 15px rgba(212, 175, 55, 0.3);
+    transform: translateY(2px);
+}
+
+.black-key {
+    position: absolute;
+    width: 30px;
+    height: 58%;
+    background: linear-gradient(180deg, #333 0%, #1a1a1a 100%);
+    border: 1px solid #222;
+    border-radius: 0 0 5px 5px;
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.08s, transform 0.05s, box-shadow 0.05s;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.black-key::after {
+    content: attr(data-key);
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.55rem;
+    opacity: 0.35;
+    color: #999;
+    pointer-events: none;
+}
+
+.black-key:active,
+.black-key.pressed {
+    background: linear-gradient(180deg, #555 0%, #333 100%);
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.4), 0 4px 12px rgba(212, 175, 55, 0.25);
+    transform: translateY(2px);
+}
+
+/* Responsive Piano Modal */
+@media (max-width: 768px) {
+    #piano-fab {
+        width: 50px;
+        height: 50px;
+        font-size: 1.4rem;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .piano-modal-content {
+        padding: 1.5rem;
+        width: 95%;
+    }
+
+    .piano-keyboard {
+        height: 150px;
+    }
+
+    .black-key {
+        width: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .preset-btn {
+        padding: 6px 14px;
+        font-size: 0.8rem;
+    }
+
+    .piano-keyboard {
+        height: 130px;
+    }
+
+    .black-key {
+        width: 20px;
+    }
+}
+
+/* Touch-only extra feedback */
+@media (hover: none) and (pointer: coarse) {
+    .white-key:active,
+    .white-key.pressed {
+        background: linear-gradient(180deg, #d0d0d0 0%, #b0b0b0 100%) !important;
+        box-shadow: inset 0 3px 8px rgba(0,0,0,0.3), 0 6px 20px rgba(212, 175, 55, 0.4) !important;
+        transform: translateY(3px) !important;
+    }
+
+    .black-key:active,
+    .black-key.pressed {
+        background: linear-gradient(180deg, #666 0%, #333 100%) !important;
+        box-shadow: inset 0 2px 5px rgba(0,0,0,0.4), 0 6px 18px rgba(212, 175, 55, 0.35) !important;
+        transform: translateY(3px) !important;
+    }
+
+    .piano-keyboard {
+        height: 170px;
+    }
 }

@@ -6,10 +6,12 @@
     <title>Facundo Dante - Músico Profesional</title>
     <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="js/menu.js" defer></script>
     <script src="js/translations.js" defer></script>
+    <script src="js/rain-notes.js" defer></script>
+    <script src="js/piano-modal.js" defer></script>
 </head>
 <body>
     <header>
@@ -37,7 +39,7 @@
     </header>
     <div class="hero" style="background-image: url('img/img7.jfif');">
         <div class="hero-content">
-            <h1>Facu Demb</h1>
+            <h1>Facundo Dante</h1>
             <p class="subtitle" data-translate="profession">Músico Profesional | Arreglista | Compositor | Docente</p>
         </div>
     </div>
@@ -159,8 +161,9 @@
                 </p>
                 <p><i class="fas fa-envelope"></i> fademib.musica@gmail.com</p>
                 <div class="social-links">
-                    <a href="https://www.instagram.com/facu_demb" target="_blank" title="Seguime en Instagram">
+                    <a href="https://www.instagram.com/facu_demb" target="_blank" class="instagram-btn" title="Seguime en Instagram">
                         <i class="fab fa-instagram"></i>
+                        <span>Seguime en Instagram</span>
                     </a>
                 </div>
             </div>
@@ -168,5 +171,47 @@
     </section>
 
   
+    <!-- Rain Notes Canvas Background -->
+    <canvas id="rain-canvas"></canvas>
+
+    <!-- Piano Icon (blinking bottom-right) -->
+    <div id="piano-fab" title="Abrir Piano">
+        <i class="fas fa-music"></i>
+        <i class="fas fa-piano-keyboard"></i>
+    </div>
+
+    <!-- Piano Modal -->
+    <div id="piano-modal" class="piano-modal-overlay">
+        <div class="piano-modal-content">
+            <button class="piano-modal-close">&times;</button>
+            <h3>Piano Virtual</h3>
+            <div class="preset-buttons">
+                <button class="preset-btn active" data-preset="piano">Piano</button>
+                <button class="preset-btn" data-preset="organ">Órgano</button>
+                <button class="preset-btn" data-preset="strings">Cuerdas</button>
+                <button class="preset-btn" data-preset="synth">Synth</button>
+                <button class="preset-btn" data-preset="pad">Pad</button>
+            </div>
+            <div class="piano-container">
+                <div class="piano-keyboard" id="piano-keyboard">
+                    <!-- White keys C D E F G A B -->
+                    <div class="white-key" data-note="C4" data-key="Q"></div>
+                    <div class="white-key" data-note="D4" data-key="E"></div>
+                    <div class="white-key" data-note="E4" data-key="T"></div>
+                    <div class="white-key" data-note="F4" data-key="Y"></div>
+                    <div class="white-key" data-note="G4" data-key="I"></div>
+                    <div class="white-key" data-note="A4" data-key="P"></div>
+                    <div class="white-key" data-note="B4" data-key="]"></div>
+                    <!-- Black keys positioned absolutely -->
+                    <div class="black-key" data-note="C#4" data-key="W" style="left: calc(1 * 14.28% - 15px);"></div>
+                    <div class="black-key" data-note="D#4" data-key="R" style="left: calc(2 * 14.28% - 15px);"></div>
+                    <div class="black-key" data-note="F#4" data-key="U" style="left: calc(4 * 14.28% - 15px);"></div>
+                    <div class="black-key" data-note="G#4" data-key="O" style="left: calc(5 * 14.28% - 15px);"></div>
+                    <div class="black-key" data-note="A#4" data-key="[" style="left: calc(6 * 14.28% - 15px);"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
