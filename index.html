@@ -46,9 +46,9 @@
     <div class="hero" id="hero" style="background-image: url('img/img7.jfif');">
         <div class="hero-content">
             <h1>Facu Demb</h1>
-            <p class="subtitle">Músico Profesional | Arreglista | Compositor | Docente</p>
+            <p class="subtitle" data-translate="profession">Músico Profesional | Arreglista | Compositor | Docente</p>
             <div class="hero-bio">
-                <p>Músico profesional completo con amplia experiencia como intérprete, compositor y arreglista. Estudió en el Conservatorio Superior Manuel de Falla en Buenos Aires, acompañando su formación clásica con el aprendizaje e incursión en distintos campos de la música y el sonido junto a diversos maestros. Ha trabajado con artistas de géneros variados (Jazz, funk, rock, pop, tropical, entre otros) aportando su talento y versatilidad para la creación musical.</p>
+                <p data-translate="bio">Músico profesional completo con amplia experiencia como intérprete, compositor y arreglista. Estudió en el Conservatorio Superior Manuel de Falla en Buenos Aires, acompañando su formación clásica con el aprendizaje e incursión en distintos campos de la música y el sonido junto a diversos maestros. Ha trabajado con artistas de géneros variados (Jazz, funk, rock, pop, tropical, entre otros) aportando su talento y versatilidad para la creación musical.</p>
             </div>
         </div>
     </div>
@@ -146,9 +146,9 @@
 
     <section id="contacto">
         <div class="container">
-            <h2 data-translate="contact" style="font-size:2.8rem; color:var(--accent-color); letter-spacing:8px; font-weight:200; margin-bottom:1.5rem;">Contacto</h2>
             <div class="contact-info">
                 <div class="contact-row">
+                    <span class="contact-label" data-translate="contact">Contacto</span>
                     <a href="https://wa.me/5491139264111?text=Hola%20Facu,%20me%20gustaría%20obtener%20más%20información" 
                        target="_blank" 
                        class="contact-icon-link" title="WhatsApp">
@@ -171,7 +171,22 @@
 
     <!-- Piano Icon (blinking bottom-right) -->
     <div id="piano-fab" title="Abrir Piano">
-        <i class="fas fa-keyboard"></i>
+        <svg viewBox="0 0 40 24" width="32" height="19" fill="none">
+            <!-- White keys C D E F G A B -->
+            <rect x="0" y="2" width="5" height="20" rx="0.5" fill="#0a0a0a" stroke="none"/>
+            <rect x="5.7" y="2" width="5" height="20" rx="0.5" fill="#0a0a0a" stroke="none"/>
+            <rect x="11.4" y="2" width="5" height="20" rx="0.5" fill="#0a0a0a" stroke="none"/>
+            <rect x="17.1" y="2" width="5" height="20" rx="0.5" fill="#0a0a0a" stroke="none"/>
+            <rect x="22.8" y="2" width="5" height="20" rx="0.5" fill="#0a0a0a" stroke="none"/>
+            <rect x="28.5" y="2" width="5" height="20" rx="0.5" fill="#0a0a0a" stroke="none"/>
+            <rect x="34.2" y="2" width="5" height="20" rx="0.5" fill="#0a0a0a" stroke="none"/>
+            <!-- Black keys: grupo 2 (C#, D#) + grupo 3 (F#, G#, A#) -->
+            <rect x="3.4" y="2" width="4" height="11" rx="1" fill="#d4af37" stroke="none"/>
+            <rect x="9.1" y="2" width="4" height="11" rx="1" fill="#d4af37" stroke="none"/>
+            <rect x="20.5" y="2" width="4" height="11" rx="1" fill="#d4af37" stroke="none"/>
+            <rect x="26.2" y="2" width="4" height="11" rx="1" fill="#d4af37" stroke="none"/>
+            <rect x="31.9" y="2" width="4" height="11" rx="1" fill="#d4af37" stroke="none"/>
+        </svg>
     </div>
 
     <!-- Piano Modal -->

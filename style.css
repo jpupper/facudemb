@@ -108,11 +108,11 @@ input, textarea, [contenteditable] {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 1.5rem;
 }
 
 section {
-    padding: 5rem 0;
+    padding: 3rem 0;
     position: relative;
 }
 
@@ -139,6 +139,10 @@ h2 {
     font-weight: 400;
 }
 
+#grabaciones h2 {
+    font-size: 2rem;
+}
+
 h3 {
     font-size: 1.5rem;
     color: rgba(212, 175, 55, 0.7);
@@ -156,7 +160,7 @@ h3 {
 
 .service-card {
     background: var(--card-bg);
-    padding: 3rem;
+    padding: 2rem;
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -167,7 +171,7 @@ h3 {
 }
 
 .service-card p {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .service-card strong, 
@@ -249,7 +253,15 @@ h3 {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 3rem;
+    gap: 2.5rem;
+}
+
+.contact-label {
+    color: rgba(212, 175, 55, 0.6);
+    font-size: 1rem;
+    font-weight: 200;
+    letter-spacing: 5px;
+    text-transform: uppercase;
 }
 
 .contact-icon-link {
@@ -271,13 +283,13 @@ h3 {
 .image-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    gap: 1rem;
+    margin-top: 1.5rem;
 }
 
 .gallery-image {
     width: 100%;
-    height: 300px;
+    height: 280px;
     object-fit: cover;
     border-radius: 15px;
     transition: transform 0.3s ease;
