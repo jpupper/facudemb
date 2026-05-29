@@ -1,6 +1,6 @@
 const translations = {
     'es': {
-        'profession': 'Músico Profesional | Arreglista | Compositor | Docente',
+        'profession': 'Pianista | Compositor | Docente',
         'about': 'Facundo Dante',
         'bio': 'Músico profesional completo con amplia experiencia como intérprete, compositor y arreglista. Estudió en el Conservatorio Superior Manuel de Falla en Buenos Aires, acompañando su formación clásica con el aprendizaje e incursión en distintos campos de la música y el sonido junto a diversos maestros/as. Facundo ha trabajado con artistas de géneros variados (tales como Jazz, funk, rock, pop o tropical, entre otros) aportando su talento y versatilidad para la creación musical, llevándolo inclusive a participar en producciones del cine nacional e internacional.',
         'live-performance': 'Participaciones en vivo y performance',
@@ -30,7 +30,7 @@ const translations = {
         'recording-highlight': '¡Trabajemos y hagamos que tu música suene excepcional!',
     },
     'en': {
-        'profession': 'Professional Musician | Arranger | Composer | Teacher',
+        'profession': 'Pianist | Composer | Teacher',
         'about': 'Facundo Dante',
         'bio': 'A comprehensive professional musician with extensive experience as a performer, composer, and arranger. He studied at the Manuel de Falla Superior Conservatory in Buenos Aires, complementing his classical training with learning and venturing into different fields of music and sound alongside various teachers. Facundo has worked with artists from various genres (such as Jazz, funk, rock, pop, or tropical, among others), contributing his talent and versatility to musical creation, even leading him to participate in national and international film productions.',
         'live-performance': 'Live Performances',
@@ -60,7 +60,7 @@ const translations = {
         'recording-highlight': 'Let\'s work together and make your music sound exceptional!',
     },
     'zh': {
-        'profession': '专业音乐家 | 编曲 | 作曲家 | 教师',
+        'profession': '钢琴家 | 作曲家 | 教师',
         'about': 'Facundo Dante',
         'bio': '全面的专业音乐家，具有丰富的表演、作曲和编曲经验。他在布宜诺斯艾利斯的Manuel de Falla高等音乐学院学习，在各位老师的指导下，将古典音乐训练与音乐和声音领域的学习和探索相结合。Facundo与各种流派的艺术家合作（如爵士乐、放克、摇滚、流行或热带音乐等），为音乐创作贡献才华和多样性，甚至参与国内外电影制作。',
         'live-performance': '现场表演',
