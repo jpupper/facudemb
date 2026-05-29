@@ -56,43 +56,42 @@ body {
 .hero-content {
     position: relative;
     z-index: 1;
-    padding: 2rem;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
-    border: 1px solid var(--accent-color);
-    backdrop-filter: blur(5px);
+    padding: 2.5rem 3rem;
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 14px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    backdrop-filter: blur(8px);
 }
 
 .hero h1 {
-    font-size: 5rem;
-    margin-bottom: 0.8rem;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
-    color: var(--accent-color);
+    font-size: 4.5rem;
+    margin-bottom: 0.5rem;
+    color: rgba(212, 175, 55, 0.88);
     font-weight: 200;
-    letter-spacing: 8px;
+    letter-spacing: 10px;
     text-transform: uppercase;
 }
 
 .hero p {
-    font-size: 1.2rem;
-    letter-spacing: 4px;
+    font-size: 1rem;
+    letter-spacing: 5px;
     font-weight: 300;
     text-transform: uppercase;
-    opacity: 0.7;
+    opacity: 0.55;
 }
 
 .hero-bio {
-    max-width: 600px;
-    margin: 2rem auto 0;
-    padding: 0 1rem;
+    max-width: 540px;
+    margin: 1.5rem auto 0;
+    padding: 0 0.5rem;
 }
 
 .hero-bio p {
-    font-size: 0.9rem;
-    line-height: 1.8;
-    opacity: 0.55;
-    font-weight: 300;
-    letter-spacing: 1px;
+    font-size: 0.82rem;
+    line-height: 1.9;
+    opacity: 0.5;
+    font-weight: 200;
+    letter-spacing: 1.2px;
 }
 
 .container {
@@ -111,22 +110,21 @@ section:nth-child(even) {
 }
 
 h2 {
-    font-size: 3rem;
-    color: var(--accent-color);
+    font-size: 2.5rem;
+    color: rgba(212, 175, 55, 0.75);
     margin-bottom: 2rem;
     text-align: center;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    font-weight: 800;
+    letter-spacing: 5px;
+    font-weight: 300;
 }
 
 h3 {
-    font-size: 1.8rem;
-    color: var(--accent-color);
+    font-size: 1.5rem;
+    color: rgba(212, 175, 55, 0.7);
     margin-bottom: 1.5rem;
-    font-weight: 700;
-    line-height: 1.4;
+    font-weight: 400;
+    line-height: 1.5;
 }
 
 .services-grid {
@@ -228,13 +226,17 @@ h3 {
 }
 
 .contact-info p {
-    font-size: 1.4rem;
-    margin: 1.5rem 0;
+    font-size: 1.1rem;
+    margin: 1.3rem 0;
     padding: 0 1rem;
+    opacity: 0.7;
+    font-weight: 300;
+    letter-spacing: 1px;
 }
 
 .contact-info p i {
     margin-right: 0.5rem;
+    opacity: 0.6;
 }
 
 .social-links {
@@ -294,22 +296,21 @@ h3 {
 }
 
 .highlight {
-    color: var(--accent-color);
-    font-size: 1.5rem;
-    font-weight: 700;
+    color: rgba(212, 175, 55, 0.75);
+    font-size: 1.3rem;
+    font-weight: 400;
     margin-top: 2rem;
-    letter-spacing: 0.5px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    letter-spacing: 1.5px;
 }
 
 .main-title {
-    font-size: 2.5rem;
-    color: var(--accent-color);
+    font-size: 2rem;
+    color: rgba(212, 175, 55, 0.75);
     margin-bottom: 2rem;
-    font-weight: 700;
-    line-height: 1.4;
+    font-weight: 300;
+    line-height: 1.5;
     text-align: center;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    letter-spacing: 3px;
 }
 
 .btn-container {
@@ -319,27 +320,27 @@ h3 {
 
 .btn {
     display: inline-block;
-    padding: 1.5rem 3rem;
-    margin: 2rem 0;
-    background-color: var(--accent-color);
-    color: var(--primary-color);
+    padding: 1rem 2.5rem;
+    margin: 1.5rem 0;
+    background-color: transparent;
+    color: rgba(212, 175, 55, 0.75);
     text-decoration: none;
+    border: 1px solid rgba(212, 175, 55, 0.25);
     border-radius: 50px;
-    font-weight: bold;
-    font-size: 1.2rem;
+    font-weight: 400;
+    font-size: 0.88rem;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
     position: relative;
     overflow: hidden;
 }
 
 .btn:hover {
-    background-color: #ffffff;
-    color: var(--accent-color);
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+    background-color: rgba(212, 175, 55, 0.1);
+    color: rgba(212, 175, 55, 0.9);
+    border-color: rgba(212, 175, 55, 0.45);
+    transform: translateY(-2px);
 }
 
 .btn::after {
@@ -506,27 +507,30 @@ header {
 }
 
 .nav-links a {
-    color: white;
+    color: rgba(255, 255, 255, 0.75);
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 400;
+    font-size: 0.88rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     transition: color 0.3s ease;
 }
 
 .nav-links a:hover {
-    color: var(--accent-color);
+    color: rgba(212, 175, 55, 0.85);
 }
 
 .nav-links .contact-btn {
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 1rem;
     background-color: transparent;
-    border: 1px solid var(--accent-color);
-    color: var(--accent-color);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    color: rgba(212, 175, 55, 0.75);
     border-radius: 4px;
 }
 
 .nav-links .contact-btn:hover {
-    background-color: var(--accent-color);
-    color: var(--dark-bg) !important;
+    background-color: rgba(212, 175, 55, 0.12);
+    color: rgba(212, 175, 55, 0.9) !important;
 }
 
 /* Synth 3D nav link */
