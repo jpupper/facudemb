@@ -146,23 +146,19 @@
 
     <section id="contacto">
         <div class="container">
-            <h2 data-translate="contact" style="font-size:3rem; color:var(--accent-color); letter-spacing:6px; font-weight:300;">Contacto</h2>
+            <h2 data-translate="contact" style="font-size:2.8rem; color:var(--accent-color); letter-spacing:8px; font-weight:200; margin-bottom:1.5rem;">Contacto</h2>
             <div class="contact-info">
-                <h3 style="color: var(--accent-color); font-size: 2rem; margin-bottom: 2rem; font-weight: 300; letter-spacing: 4px;" data-translate="lets-connect">¡Conectemos!</h3>
-                <p>
+                <div class="contact-row">
                     <a href="https://wa.me/5491139264111?text=Hola%20Facu,%20me%20gustaría%20obtener%20más%20información" 
                        target="_blank" 
-                       class="whatsapp-link">
-                        <i class="fab fa-whatsapp"></i> 
-                        <span data-translate="contact-whatsapp">Contactar por WhatsApp</span>
-                        <span class="phone-number">+5491139264111</span>
+                       class="contact-icon-link" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
                     </a>
-                </p>
-                <p><i class="fas fa-envelope"></i> fademib.musica@gmail.com</p>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/facu_demb" target="_blank" class="instagram-btn" title="Seguime en Instagram">
+                    <a href="mailto:fademib.musica@gmail.com" class="contact-icon-link" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://www.instagram.com/facu_demb" target="_blank" class="contact-icon-link" title="Instagram">
                         <i class="fab fa-instagram"></i>
-                        <span>Seguime en Instagram</span>
                     </a>
                 </div>
             </div>
@@ -175,7 +171,7 @@
 
     <!-- Piano Icon (blinking bottom-right) -->
     <div id="piano-fab" title="Abrir Piano">
-        <i class="fas fa-piano-keyboard"></i>
+        <i class="fas fa-keyboard"></i>
     </div>
 
     <!-- Piano Modal -->
@@ -186,10 +182,8 @@
             <div class="preset-buttons">
                 <button class="preset-btn active" data-preset="piano">Piano</button>
                 <button class="preset-btn" data-preset="epiano">E.Piano</button>
-                <button class="preset-btn" data-preset="organ">Órgano</button>
                 <button class="preset-btn" data-preset="strings">Cuerdas</button>
                 <button class="preset-btn" data-preset="synth">Synth</button>
-                <button class="preset-btn" data-preset="pad">Pad</button>
             </div>
             <div class="piano-container">
                 <div class="piano-keyboard" id="piano-keyboard">
