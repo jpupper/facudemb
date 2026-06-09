@@ -1,93 +1,132 @@
 const translations = {
     'es': {
+        // Nav
+        'nav-performance': 'En vivo',
+        'nav-studio': 'Estudio',
+        'nav-videos': 'Videos',
+        'nav-classes': 'Formación',
+        'nav-transcriptions': 'Transcripciones',
+        'nav-contact': 'Contacto',
+
+        // Hero
         'profession': 'Pianista | Compositor | Docente',
-        'about': 'Facundo Dante',
-        'bio': 'Músico profesional completo con amplia experiencia como intérprete, compositor y arreglista. Estudió en el Conservatorio Superior Manuel de Falla en Buenos Aires, acompañando su formación clásica con el aprendizaje e incursión en distintos campos de la música y el sonido junto a diversos maestros/as. Facundo ha trabajado con artistas de géneros variados (tales como Jazz, funk, rock, pop o tropical, entre otros) aportando su talento y versatilidad para la creación musical, llevándolo inclusive a participar en producciones del cine nacional e internacional.',
-        'live-performance': 'Participaciones en vivo y performance',
-        'looking-for': '¿Buscas tecladista para tu banda o grupo? ¿Querés darle el toque ideal a tu evento con música en vivo?',
-        'equipment': 'Se proporciona el servicio de trabajos en vivo poniendo a disposición un completo equipamiento equipamiento que abarca distintos tipos de pianos y teclados.',
-        'versatility': 'Para incorporar teclados, sonidos y texturas a las presentaciones de tu grupo musical o acompañar tu voz de forma solista (experiencia y fluides en diversidad de estilos).',
-        'events': 'Para ambientalización musical de eventos de forma particular, la propuesta abarca un repertorio adaptable y a pedido según se solicite, con interpretaciones que pueden incluir desde lo clásico hasta lo más moderno.',
-        'make-shine': '¡Logra que tu evento brille con la magia de la música en vivo!',
+        'hero-bio-1': 'Músico profesional compositor, intérprete y arreglista con amplia trayectoria en diversos ámbitos de la música y el sonido. Formado en el Conservatorio Superior Manuel de Falla de Buenos Aires, complementó su formación académica con el estudio y la exploración de distintos lenguajes musicales junto a reconocidos maestros y maestras.',
+        'hero-bio-2': 'Facundo ha trabajado con artistas de múltiples géneros (Jazz, funk, rock, pop o música tropical entre otros estilos) aportando versatilidad, sensibilidad y una sólida visión musical en proyectos de diversa índole. Su experiencia incluye además la participación en producciones para cine nacional e internacional.',
+
+        // Section titles
+        'live-performance': 'Experiencias musicales en vivo',
+        'recording': 'Producción y sesiones',
         'sessions': 'Videos',
         'classes': 'Formación musical',
-        'discover': '¡La música desde un enfoque personalizado y flexible!',
-        'class-description': 'Clases de piano, teoría musical, sonido y técnica pianística, con un método dinámico e innovador. Lecciones individuales adaptadas a tus necesidades, para aprender a ritmo propio y lograr desarrollar todo tu potencial.',
-        'class-info': 'Sea dominando las funciones del teclado, adquiriendo la teoría o perfeccionando tu técnica, las clases te esperan para acompañarte y disfrutar de cada paso.',
-        'check-spots': 'Consultar vacantes',
-        'transcriptions': 'Transcripciones musicales',
-        'transcription-desc': 'Convertí tus obras y canciones en partituras detalladas, con cifrados y letras precisas, adaptadas a lo que necesites.',
-        'transcription-info': 'Para ensayos, grabaciones o registro intelectual de las mismas. Confiable y con la calidad deseada.',
-        'sheet-music': 'Transcripción de partituras y arreglos, para todos los estilos y generos.',
-        'transform': '¡Transforma tus ideas musicales en partituras impecables!',
-        'consult': 'Consultar',
+        'transcriptions': 'Partituras & Transcripciones',
         'contact': 'Contacto',
-        'lets-connect': '¡Conectemos!',
-        'contact-whatsapp': 'Contactar por WhatsApp',
-        'recording': 'Grabación y trabajos de estudio',
-        'recording-desc': 'Si buscas la ejecución de pianos, teclados, sonidos y/o texturas que puedan precisar tus grabaciones en estudio o sesiones en vivo, este servicio puede aportar con interpretaciones únicas y técnicas que eleven el nivel de tu producción.',
-        'recording-details': 'Ya sea para líneas de piano específicas, arreglos, melodías innovadoras o texturas electrónicas, el trabajo se adapta a la visión de cada proyecto y a la búsqueda del toque que lo haga destacar.',
-        'recording-highlight': '¡Trabajemos y hagamos que tu música suene excepcional!',
+
+        // Performance section
+        'perf-desc-1': 'Presentaciones musicales solistas o con grupo. Repertorios personalizados y versátiles. Formatos adaptados a cada evento, experiencias inmersivas participativas y propuestas originales desarrolladas en función de la ocasión.',
+        'perf-desc-2': 'Disponible para conciertos, eventos privados, recepciones o ceremonias.',
+
+        // Recording section
+        'rec-desc-1': 'Interpretaciones de piano, teclados y texturas para grabaciones de estudio, sesiones en vivo y producciones audiovisuales.',
+        'rec-desc-2': 'Arreglos auténticos, líneas musicales y recursos sonoros preparados para aportar a la identidad de cada proyecto.',
+        'rec-desc-3': 'Disponible para producciones originales, colaboraciones artísticas y trabajos de sesión.',
+
+        // Classes section
+        'class-desc-1': 'Clases personalizadas de piano, teoría musical, sonido y técnica pianística, orientadas a desarrollar herramientas musicales de forma dinámica y flexible.',
+        'class-desc-2': 'Lecciones adaptadas al perfil, objetivos y ritmo de cada estudiante, combinando formación técnica, creatividad y exploración musical.',
+        'class-desc-3': 'Disponible para niveles iniciales, intermedios y avanzados.',
+        'check-spots': 'Consultar vacantes',
+
+        // Transcriptions section
+        'trans-desc-1': 'Desarrollo de partituras, transcripciones y arreglos musicales con criterios de precisión, claridad y adaptación.',
+        'trans-desc-2': 'Material preparado para ensayos, grabaciones, presentaciones en vivo o registro de obras, incluyendo cifrados, melodías y recursos de notación musical.',
+        'trans-desc-3': 'Disponible para distintos formatos, estilos y necesidades de producción.',
+        'consult': 'Consultar',
     },
     'en': {
+        // Nav
+        'nav-performance': 'Live',
+        'nav-studio': 'Studio',
+        'nav-videos': 'Videos',
+        'nav-classes': 'Lessons',
+        'nav-transcriptions': 'Scores',
+        'nav-contact': 'Contact',
+
+        // Hero
         'profession': 'Pianist | Composer | Teacher',
-        'about': 'Facundo Dante',
-        'bio': 'A comprehensive professional musician with extensive experience as a performer, composer, and arranger. He studied at the Manuel de Falla Superior Conservatory in Buenos Aires, complementing his classical training with learning and venturing into different fields of music and sound alongside various teachers. Facundo has worked with artists from various genres (such as Jazz, funk, rock, pop, or tropical, among others), contributing his talent and versatility to musical creation, even leading him to participate in national and international film productions.',
-        'live-performance': 'Live Performances',
-        'looking-for': 'Looking for a keyboardist for your band or group? Want to give your event the ideal touch with live music?',
-        'equipment': 'Live work services are provided with complete equipment that includes various types of pianos and keyboards.',
-        'versatility': 'To incorporate keyboards, sounds, and textures into your musical group\'s presentations or accompany your voice as a soloist (experience and fluency in diverse styles).',
-        'events': 'For musical ambiance at private events, the proposal includes an adaptable repertoire upon request, with interpretations ranging from classical to modern.',
-        'make-shine': 'Make your event shine with the magic of live music!',
+        'hero-bio-1': 'Professional musician, composer, performer and arranger with extensive experience in diverse areas of music and sound. Trained at the Manuel de Falla Superior Conservatory in Buenos Aires, he complemented his academic education by studying and exploring different musical languages alongside renowned teachers.',
+        'hero-bio-2': 'Facundo has worked with artists from multiple genres (Jazz, funk, rock, pop, tropical music, among others), bringing versatility, sensitivity and a solid musical vision to projects of all kinds. His experience also includes participation in national and international film productions.',
+
+        // Section titles
+        'live-performance': 'Live Music Experiences',
+        'recording': 'Production & Sessions',
         'sessions': 'Videos',
         'classes': 'Music Classes',
-        'discover': 'Music from a personalized and flexible approach!',
-        'class-description': 'Piano classes, music theory, sound, and piano technique, with a dynamic and innovative method. Individual lessons adapted to your needs, to learn at your own pace and develop your full potential.',
-        'class-info': 'Whether mastering keyboard functions, acquiring theory, or perfecting your technique, classes await to accompany you and enjoy every step.',
-        'check-spots': 'Check availability here',
-        'transcriptions': 'Musical Transcriptions',
-        'transcription-desc': 'Convert your works and songs into detailed scores, with precise chord symbols and lyrics, adapted to your needs.',
-        'transcription-info': 'For rehearsals, recordings, or intellectual property registration. Reliable and with the desired quality.',
-        'sheet-music': 'Score transcription and arrangements for all styles and genres.',
-        'transform': 'Transform your musical ideas into impeccable scores!',
-        'consult': 'Inquire',
+        'transcriptions': 'Scores & Transcriptions',
         'contact': 'Contact',
-        'lets-connect': 'Let\'s Connect!',
-        'contact-whatsapp': 'Contact via WhatsApp',
-        'recording': 'Recording and Studio Work',
-        'recording-desc': 'If you\'re looking for piano, keyboard, sound, and/or texture execution that your studio recordings or live sessions may need, this service can contribute with unique interpretations and techniques that elevate your production\'s level.',
-        'recording-details': 'Whether for specific piano lines, arrangements, innovative melodies, or electronic textures, the work adapts to each project\'s vision and the search for that special touch that makes it stand out.',
-        'recording-highlight': 'Let\'s work together and make your music sound exceptional!',
+
+        // Performance section
+        'perf-desc-1': 'Solo or group musical performances. Custom and versatile repertoires. Formats adapted to each event, immersive participatory experiences and original proposals developed according to the occasion.',
+        'perf-desc-2': 'Available for concerts, private events, receptions or ceremonies.',
+
+        // Recording section
+        'rec-desc-1': 'Piano, keyboard and texture performances for studio recordings, live sessions and audiovisual productions.',
+        'rec-desc-2': 'Authentic arrangements, musical lines and sound resources prepared to contribute to the identity of each project.',
+        'rec-desc-3': 'Available for original productions, artistic collaborations and session work.',
+
+        // Classes section
+        'class-desc-1': 'Personalized piano, music theory, sound and piano technique classes oriented to develop musical tools in a dynamic and flexible way.',
+        'class-desc-2': 'Lessons adapted to each student\'s profile, goals and pace, combining technical training, creativity and musical exploration.',
+        'class-desc-3': 'Available for beginner, intermediate and advanced levels.',
+        'check-spots': 'Check availability',
+
+        // Transcriptions section
+        'trans-desc-1': 'Development of scores, transcriptions and musical arrangements with criteria of precision, clarity and adaptation.',
+        'trans-desc-2': 'Material prepared for rehearsals, recordings, live performances or work registration, including chord symbols, melodies and music notation resources.',
+        'trans-desc-3': 'Available for different formats, styles and production needs.',
+        'consult': 'Inquire',
     },
     'zh': {
+        // Nav
+        'nav-performance': '现场',
+        'nav-studio': '录音室',
+        'nav-videos': '视频',
+        'nav-classes': '课程',
+        'nav-transcriptions': '乐谱',
+        'nav-contact': '联系方式',
+
+        // Hero
         'profession': '钢琴家 | 作曲家 | 教师',
-        'about': 'Facundo Dante',
-        'bio': '全面的专业音乐家，具有丰富的表演、作曲和编曲经验。他在布宜诺斯艾利斯的Manuel de Falla高等音乐学院学习，在各位老师的指导下，将古典音乐训练与音乐和声音领域的学习和探索相结合。Facundo与各种流派的艺术家合作（如爵士乐、放克、摇滚、流行或热带音乐等），为音乐创作贡献才华和多样性，甚至参与国内外电影制作。',
-        'live-performance': '现场表演',
-        'looking-for': '需要键盘手为您的乐队演奏？想要用现场音乐为您的活动增色？',
-        'equipment': '提供现场演出服务，配备多种钢琴和键盘的完整设备。',
-        'versatility': '为您的音乐团体演出增添键盘、音效和音色，或为您的独唱伴奏（在各种风格中都有丰富经验）。',
-        'events': '针对私人活动的音乐氛围营造，根据要求提供可调整的曲目，演绎从古典到现代的各类音乐。',
-        'make-shine': '让您的活动在现场音乐的魔力中闪耀！',
+        'hero-bio-1': '专业作曲家、演奏家和编曲音乐人，在音乐和声音的各个领域拥有丰富经验。他在布宜诺斯艾利斯的Manuel de Falla高等音乐学院接受教育，跟随知名大师学习和探索不同的音乐语言，补充了他的学术训练。',
+        'hero-bio-2': 'Facundo与多种流派的艺术家合作过（爵士、放克、摇滚、流行、热带音乐等），在各种项目中展现出多样性、敏感性和扎实的音乐视野。他的经验还包括参与国内和国际电影制作。',
+
+        // Section titles
+        'live-performance': '现场音乐体验',
+        'recording': '制作与录音',
         'sessions': '视频',
         'classes': '音乐课程',
-        'discover': '个性化和灵活的音乐教学方式！',
-        'class-description': '钢琴课程、音乐理论、声音和钢琴技巧，采用动态创新的教学方法。个性化课程适应您的需求，让您按照自己的节奏学习并发挥全部潜力。',
-        'class-info': '无论是掌握键盘功能、学习理论还是完善技巧，课程都将陪伴您享受每一步的进步。',
-        'check-spots': '在此查询名额',
-        'transcriptions': '音乐转录',
-        'transcription-desc': '将您的作品和歌曲转换成详细的乐谱，配有准确的和弦符号和歌词，根据您的需求调整。',
-        'transcription-info': '用于排练、录音或知识产权登记。可靠且具有理想的质量。',
-        'sheet-music': '为所有风格和流派提供乐谱转录和编曲。',
-        'transform': '将您的音乐创意转化为完美的乐谱！',
-        'consult': '咨询',
+        'transcriptions': '乐谱与转录',
         'contact': '联系方式',
-        'lets-connect': '让我们联系！',
-        'contact-whatsapp': '通过WhatsApp联系',
-        'recording': '录音和工作室制作',
-        'recording-desc': '如果您需要钢琴、键盘、音效和音色来完善您的录音室作品或现场演出，我们的服务可以提供独特的演绎和技巧，提升您的作品水平。',
-        'recording-details': '无论是特定的钢琴演奏、编曲、创新旋律还是电子音效，我们都会根据每个项目的愿景和独特性进行调整。',
-        'recording-highlight': '让我们一起合作，让您的音乐听起来与众不同！',
+
+        // Performance section
+        'perf-desc-1': '独奏或团体音乐表演。可定制的多样化曲目。适应每个活动的格式、沉浸式参与体验以及根据场合制定的原创方案。',
+        'perf-desc-2': '可用于音乐会、私人活动、接待或仪式。',
+
+        // Recording section
+        'rec-desc-1': '为录音室录音、现场演出和视听制作提供钢琴、键盘和音色演绎。',
+        'rec-desc-2': '真实的编曲、音乐线条和音响资源，为每个项目的特色做出贡献。',
+        'rec-desc-3': '可用于原创制作、艺术合作和录音工作。',
+
+        // Classes section
+        'class-desc-1': '个性化钢琴、音乐理论、声音和钢琴技巧课程，以动态和灵活的方式发展音乐技能。',
+        'class-desc-2': '根据每个学生的个人资料、目标和节奏调整课程，结合技术训练、创造力和音乐探索。',
+        'class-desc-3': '适用于初级、中级和高级水平。',
+        'check-spots': '在此查询名额',
+
+        // Transcriptions section
+        'trans-desc-1': '以精准、清晰和适应性为标准开发乐谱、转录和音乐编曲。',
+        'trans-desc-2': '为排练、录音、现场表演或作品注册准备的材料，包括和弦符号、旋律和音乐记谱资源。',
+        'trans-desc-3': '可用于不同格式、风格和制作需求。',
+        'consult': '咨询',
     }
 };
 
@@ -100,11 +139,9 @@ function changeLanguage(lang) {
     
     elements.forEach(element => {
         const key = element.getAttribute('data-translate');
-        console.log('Translating key:', key);
         
         if (translations[lang] && translations[lang][key]) {
             const translation = translations[lang][key];
-            console.log('Translation found:', translation);
             
             if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                 element.placeholder = translation;
